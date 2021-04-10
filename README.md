@@ -11,21 +11,21 @@ The app will provide a user friendly environment for all ages to be able to shar
 For APIs the initial thought is that of Google maps, in order for users to check in where they bought the product, as well a potential API concerning the coffee products, so as to have these registered somewhere. 
 
 ____________________________________________________________________________________________
-MoSCoW 
+MoSCoW requirements
 
---Must have--
+**--Must have--**
 Profile page containing information and activity of the user
 Search function for finding the specific product
 Sharing functionality to share experiences among friends and family
 Rating system for users to rate the products
 
---Should have--
+**--Should have--**
 Google map function in order to pinpoint the local store at which the coffee was purchased
 Comment section where other users are able to comment on their friends activity
 
---Could have--
+**--Could have--**
 Facebook friendly user login API, so that you can log in directly with facebook.
 
---Won’t have--
+**--Won’t have--**
 
 
