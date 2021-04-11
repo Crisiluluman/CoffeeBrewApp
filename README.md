@@ -13,25 +13,28 @@ For APIs the initial thought is that of Google maps, in order for users to check
 ____________________________________________________________________________________________
 ## MoSCoW requirements ##
 
-**--Must have--**
-Profile page containing information and activity of the user
-Search function for finding the specific product
-Sharing functionality to share experiences among friends and family
-Rating system for users to rate the products
+**Must have** <br>
+- Profile page containing information and activity of the user                                                            <br>
+- Search function for finding the specific product                                                                        <br>
+- Sharing functionality to share experiences among friends and family                                                     <br>
+- Rating system for users to rate the products                                                                            <br>
 
-**--Should have--**
-Google map function in order to pinpoint the local store at which the coffee was purchased
-Comment section where other users are able to comment on their friends activity
+<br>
 
-**--Could have--**
-Facebook friendly user login API, so that you can log in directly with facebook.
+**Should have** <br>
+- Google map function in order to pinpoint the local store at which the coffee was purchased                              <br>
+- Comment section where other users are able to comment on their friends activity                                         <br>
 
-**--Won’t have--**
+<br>
 
-____________________________________________________________________________________________
-**--Must have--**
-Markup : * Profile page containing information and activity of the user
-         * Search function for finding the specific product
+**Could have** <br>
+- Facebook friendly user login API, so that you can log in directly with facebook.                                        <br>
+
+<br>
+
+**Won’t have** <br>
+
+
   
 
 
