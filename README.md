@@ -11,6 +11,10 @@ The app will provide a user friendly environment for all ages to be able to shar
 For APIs the initial thought is that of Google maps, in order for users to check in where they bought the product, as well a potential API concerning the coffee products, so as to have these registered somewhere. 
 
 ____________________________________________________________________________________________
+## IMPORTANT INFORMATION ##
+When opening the project in Android Studio, try changing the view from "Android" to "Project". <br>
+That will enable you to get a much better overview regarding the, many, different XML files.
+____________________________________________________________________________________________
 ## MoSCoW requirements ##
 
 **Must have** <br>
