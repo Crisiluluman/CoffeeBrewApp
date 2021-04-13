@@ -43,3 +43,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+
+android.sourceSets {
+    main {
+        res.srcDirs =
+                [
+                        'src/main/res/layouts/assets',
+                        'src/main/res/layouts/fragments',
+                        'src/main/res/layouts/activities',
+                        'src/main/res/layouts',
+                        'src/main/res'
+                ]
+    }
+}
+
+/*
+    <-- Reverse these steps if the res.layouts folder won't work anymore
+https://medium.com/mindorks/how-to-put-android-layout-files-in-subfolders-1f7cf07ff48f
+*/
