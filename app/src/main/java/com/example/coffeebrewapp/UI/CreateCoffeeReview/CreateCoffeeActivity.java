@@ -26,14 +26,11 @@ public class CreateCoffeeActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-       //TEST Log.e("TAG", "\n \nonCreateView: \n\n" );
-
         // Hiding the other floating buttons for this fragment
         FloatingActionButton fab_add = MainActivity.fab_add;
-        fab_add.setVisibility(View.GONE);
-
+        fab_add.hide();
         FloatingActionButton fab_search = MainActivity.fab_search;
-        fab_search.setVisibility(View.GONE);
+        fab_search.hide();
 
         return inflater.inflate(R.layout.fragment_create_coffee_review, container, false);
 

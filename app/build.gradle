@@ -26,6 +26,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+
 }
 
 dependencies {
@@ -44,6 +46,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
 
+/*
 android.sourceSets {
     main {
         res.srcDirs =
@@ -54,8 +57,31 @@ android.sourceSets {
                         'src/main/res/layouts',
                         'src/main/res'
                 ]
+
     }
 }
+*/
+
+android.sourceSets {
+    main.res.srcDirs += [
+            'app/src/main/res',
+            [
+                    'src/main/res/layouts/assets',
+                    'src/main/res/layouts/fragments',
+                    'src/main/res/layouts/activities',
+                    'src/main/res/layouts',
+                    'src/main/res'
+            ],
+            [
+                    'src/main/res/drawables/assets',
+                    'src/main/res/drawables/icons',
+                    'src/main/res/drawables/images',
+                    'src/main/res/drawables',
+                    'src/main/res'
+            ]
+    ]
+}
+
 
 /*
     <-- Reverse these steps if the res.layouts folder won't work anymore

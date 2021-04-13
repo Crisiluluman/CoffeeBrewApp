@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.coffeebrewapp.UI.Login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -73,16 +74,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Floating button to search page
         fab_search = findViewById(R.id.floating_search_button);
+        fab_search.hide();
         fab_search.setOnClickListener(v -> {
             navController.navigate(R.id.nav_searchCoffee);
         });
 
         // Floating button to add review page
         fab_add = findViewById(R.id.floating_add_button);
+        fab_add.show();
         fab_add.setOnClickListener(v -> {
             navController.navigate(R.id.nav_add_coffee_review);
         });
 
+        Toast.makeText(this, "HELLO", Toast.LENGTH_SHORT).show();
 
     }
 
