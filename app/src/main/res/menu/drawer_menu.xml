@@ -8,19 +8,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_favorite"
+            android:id="@+id/nav_followed_people"
             android:icon="@drawable/ic_favorite"
             android:title="Liked people" />
 
         <item
-            android:id="@+id/nav_editReviews"
+            android:id="@+id/nav_edit_reviews"
             android:icon="@drawable/ic_edit"
             android:title="Edit your reviews" />
 
         <item
             android:id="@+id/nav_frontPage"
             android:icon="@drawable/ic_frontpage"
-            android:title="Frontpage" />
+            android:title="Hottest coffee" />
 
         <item
             android:id="@+id/nav_searchCoffee"
@@ -31,6 +31,7 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="Profile" />
+
 
         <item
             android:id="@+id/nav_logout"

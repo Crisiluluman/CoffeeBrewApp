@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A27250">
+
+    <TextView
+        android:id="@+id/select_coffee_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Name"
+        android:textColor="#D5B7A1"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/select_coffee_image"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="10dp"
+        android:gradientRadius="9dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_coffee_title" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="Rating:"
+        android:textColor="#D5B7A1"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toEndOf="@+id/select_coffee_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RatingBar
+        android:id="@+id/select_coffee_rating"
+        style="?android:attr/ratingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:isIndicator="true"
+        android:layout_marginLeft="48dp"
+        android:max="5"
+        android:numStars="5"
+        android:scaleX=".4"
+        android:scaleY=".4"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintStart_toEndOf="@+id/select_coffee_image"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Best enjoyed with:"
+        android:textColor="#D5B7A1"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/select_coffee_image"
+        app:layout_constraintTop_toBottomOf="@+id/select_coffee_rating" />
+
+    <ImageView
+        android:id="@+id/select_coffee_icon"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:src="@drawable/ic_stempel" />
+
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="#D5B7A1"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/select_coffee_image"
+        app:layout_constraintTop_toBottomOf="@+id/select_coffee_image" />
+
+    <TextView
+        android:id="@+id/select_coffee_description"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Best enjoyed with:"
+        android:textColor="#D5B7A1"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How do you like it?:"
+        android:textColor="#D5B7A1"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/select_coffee_description"
+        app:layout_constraintTop_toBottomOf="@+id/select_coffee_description" />
+
+    <RatingBar
+        android:id="@+id/select_coffee_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:max="5"
+        android:numStars="5"
+        android:scaleX=".6"
+        android:scaleY=".6"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment section"
+        android:textColor="#D5B7A1"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/select_coffee_rate"
+        app:layout_constraintTop_toBottomOf="@+id/select_coffee_rate" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,21 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="UI.SearchCoffee.SearchCoffeeActivity"
+    tools:context=".UI.SearchCoffee.SearchCoffeeFragment"
     android:background="#A27250"
     >
 
+    <EditText
+        android:id="@+id/sort_bar_coffee"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/text_input_border"
+        android:hint="Search for coffee"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/search_page_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/text_searchCoffee_fragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_page_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="32dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You are now on the search page"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:visibility="visible"
+        app:backgroundTint="#6F373C"
+        app:backgroundTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="26dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

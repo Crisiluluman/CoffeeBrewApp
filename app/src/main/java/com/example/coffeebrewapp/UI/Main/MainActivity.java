@@ -1,10 +1,11 @@
-package com.example.coffeebrewapp;
+package com.example.coffeebrewapp.UI.Main;
 
-import androidx.appcompat.app.ActionBar;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -12,12 +13,17 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coffeebrewapp.R;
 import com.example.coffeebrewapp.UI.Login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -26,31 +32,31 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
-    private NavController navController;
     private Toolbar toolbar;
+    private MainViewModel viewModel;
+    private TextView usernameTextview;
 
     // Available floating buttons, so other fragments can hide them on their page
     public static FloatingActionButton fab_search;
-    public static FloatingActionButton fab_add;
+
+    // Navigation controller should also be available to all classes
+    public static NavController navController;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setContentView(R.layout.activity_main);
 
+        //Check if signed in
+        checkIfSignedIn();
+        
+        
         // Creating toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        // Actionbar stuff
-       /*
-        actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-
-        */
 
 
         // Creating drawer and setting it to close when clicking?
@@ -61,11 +67,15 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
 
-        // Attempt to set the drawer buttons to open other fragments
+        //Sets username in navbar header when opening main activity
+        View header = navigationView.getHeaderView(0);
+        usernameTextview = header.findViewById(R.id.usernameText);
 
+        // Setting the drawer buttons to open other fragments
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_frontPage, R.id.nav_searchCoffee) // TODO: Add more pages
-                //         .setDrawerLayout(drawer)
+                R.id.nav_frontPage, R.id.nav_searchCoffee, R.id.nav_profile,
+                R.id.nav_edit_reviews, R.id.nav_followed_people)
+                //    .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -74,22 +84,28 @@ public class MainActivity extends AppCompatActivity {
 
         // Floating button to search page
         fab_search = findViewById(R.id.floating_search_button);
-        fab_search.hide();
+        fab_search.show();
         fab_search.setOnClickListener(v -> {
             navController.navigate(R.id.nav_searchCoffee);
         });
 
-        // Floating button to add review page
-        fab_add = findViewById(R.id.floating_add_button);
-        fab_add.show();
-        fab_add.setOnClickListener(v -> {
-            navController.navigate(R.id.nav_add_coffee_review);
+    }
+    
+    private void checkIfSignedIn() {
+        viewModel.getCurrentUser().observe(this, user -> {
+            if (user != null) {
+                String firebaseUsername = viewModel.getCurrentUser().getValue().getDisplayName();
+                usernameTextview.setText(firebaseUsername);
+                Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+            } else
+                startLoginActivity();
         });
-
-        Toast.makeText(this, "HELLO", Toast.LENGTH_SHORT).show();
-
     }
 
+    private void startLoginActivity() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
 
     @Override
     public void onBackPressed() {
@@ -119,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void navMenuLogout(MenuItem item) {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+        viewModel.signOut();
     }
+
 }

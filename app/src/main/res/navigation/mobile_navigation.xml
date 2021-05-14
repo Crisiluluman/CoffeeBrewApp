@@ -10,23 +10,54 @@
 
     <fragment
         android:id="@+id/nav_frontPage"
-        android:name="com.example.coffeebrewapp.UI.Frontpage.FrontpageActivityFragment"
-        android:label="Frontpage"
+        android:name="com.example.coffeebrewapp.UI.Frontpage.FrontpageFragment"
+        android:label="Hottest coffees"
         tools:layout="@layout/fragment_frontpage"
         />
 
     <fragment
         android:id="@+id/nav_searchCoffee"
-        android:name="com.example.coffeebrewapp.UI.SearchCoffee.SearchCoffeeActivity"
+        android:name="com.example.coffeebrewapp.UI.SearchCoffee.SearchCoffeeFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search_coffee"
         />
 
     <fragment
         android:id="@+id/nav_add_coffee_review"
-        android:name="com.example.coffeebrewapp.UI.CreateCoffeeReview.CreateCoffeeActivity"
+        android:name="com.example.coffeebrewapp.UI.CreateCoffeeReview.CreateCoffeeFragment"
         android:label="Create review"
         tools:layout="@layout/fragment_create_coffee_review"
+        />
+
+    <fragment
+        android:id="@+id/nav_search_selected_coffee"
+        android:name="com.example.coffeebrewapp.UI.SearchSelectedCoffee.SearchSelectedCoffeeFragment"
+        android:label="Searched coffee"
+        tools:layout="@layout/fragment_searched_selected_coffee"
+        />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.coffeebrewapp.UI.ProfilePage.ProfilePageFragment"
+        android:label="Profile Page"
+        tools:layout="@layout/profile_page_fragment"
+
+    />
+
+    <fragment
+        android:id="@+id/nav_followed_people"
+        android:name="com.example.coffeebrewapp.UI.FollowedPeople.FollowedPeopleFragment"
+        android:label="Followed People"
+        tools:layout="@layout/fragment_followed_people"
+
+        />
+
+    <fragment
+        android:id="@+id/nav_edit_reviews"
+        android:name="com.example.coffeebrewapp.UI.EditReviews.EditReviewsFragment"
+        android:label="Your reviews"
+        tools:layout="@layout/fragment_edit_reviews"
+
         />
 
 

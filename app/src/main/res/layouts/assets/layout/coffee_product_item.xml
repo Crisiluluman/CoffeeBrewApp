@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#fefefe"
+    android:orientation="horizontal"
+    android:background="@drawable/image_border"
+    android:layout_margin="10dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/coffee_product_image"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:gradientRadius="9dp"
+            android:background="@drawable/image_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/coffee_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="#000000"
+            android:textSize="28dp"
+            app:layout_constraintStart_toEndOf="@+id/coffee_product_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/coffee_product_brew"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Brew method"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/coffee_product_rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.993"
+            app:layout_constraintStart_toEndOf="@+id/coffee_product_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/coffee_product_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:outlineAmbientShadowColor="#376F4E"
+            android:outlineSpotShadowColor="#376F4E"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            app:layout_constraintStart_toEndOf="@+id/coffee_product_image"
+            app:layout_constraintTop_toBottomOf="@+id/coffee_product_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

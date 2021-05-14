@@ -2,33 +2,86 @@ package com.example.coffeebrewapp.UI.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.coffeebrewapp.MainActivity;
+import com.example.coffeebrewapp.UI.Main.MainActivity;
 import com.example.coffeebrewapp.R;
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.FirebaseApp;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button buttonLogin;
-    private Toolbar toolbar;
+    private static final int RC_SIGN_IN = 42;
+    private LoginViewModel viewModel;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
+        FirebaseApp.initializeApp(this);
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        checkIfSignedIn();
         setContentView(R.layout.activity_login);
-        toolbar = findViewById(R.id.toolbar_sub);
+
+    }
 
 
-        buttonLogin = findViewById(R.id.loginButton);
 
-        buttonLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+    private void goToMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
 
+
+
+    private void checkIfSignedIn() {
+        viewModel.getCurrentUser().observe(this, user -> {
+            if (user != null)
+                goToMainActivity();
         });
     }
+
+
+
+    public void signIn(View v) {
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                new AuthUI.IdpConfig.FacebookBuilder().build());
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                // .setLogo(R.drawable.logo)
+                .build();
+
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            handleSignInRequest(resultCode);
+        }
+    }
+
+    private void handleSignInRequest(int resultCode) {
+        if (resultCode == RESULT_OK)
+            goToMainActivity();
+        else
+            Toast.makeText(this, "SIGN IN CANCELLED", Toast.LENGTH_SHORT).show();
+    }
+
 }

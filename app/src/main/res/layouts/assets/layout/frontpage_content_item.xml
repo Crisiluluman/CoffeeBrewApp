@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#fefefe"
+    android:orientation="horizontal"
+    android:background="@drawable/image_border"
+    android:layout_margin="10dp"
+    android:padding="15dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/frontpage_userImage"
+            android:src="@drawable/coffee_one"
+            android:background="@drawable/image_border_round"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/frontpage_username"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Insert long name"
+            android:layout_marginLeft="5dp"
+            android:textColor="#3C2A1E"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/frontpage_userImage"
+            app:layout_constraintStart_toEndOf="@+id/frontpage_userImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/frontpage_follow_ic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintEnd_toStartOf="@+id/frontpage_share_ic"
+            app:layout_constraintStart_toEndOf="@+id/frontpage_username"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/frontpage_share_ic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_share"
+            app:layout_constraintEnd_toStartOf="@+id/frontpage_maps_ic"
+            app:layout_constraintStart_toEndOf="@+id/frontpage_follow_ic"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/frontpage_maps_ic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_maps"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frontpage_share_ic"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/frontpage_coffee_name"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Coffee"
+            android:textSize="20dp"
+            android:textColor="#3C2A1E"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frontpage_userImage" />
+
+        <RatingBar
+            android:id="@+id/frontpage_rating"
+            style="?android:attr/ratingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frontpage_coffee_name" />
+
+        <ImageView
+            android:id="@+id/frontpage_thumbs_down"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:onClick="addClick"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_thumb_down"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frontpage_rating" />
+
+        <ImageView
+            android:id="@+id/frontpage_thumbs_up"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_thumb_up"
+            app:layout_constraintStart_toEndOf="@+id/frontpage_thumbs_down"
+            app:layout_constraintTop_toBottomOf="@+id/frontpage_rating" />
+
+        <ImageView
+            android:id="@+id/frontpage_brewmethod"
+            android:layout_width="60dp"
+
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_filter"
+            app:layout_constraintEnd_toStartOf="@+id/frontpage_coffee_image"
+            app:layout_constraintStart_toEndOf="@+id/frontpage_thumbs_up"
+            app:layout_constraintTop_toBottomOf="@+id/frontpage_rating" />
+
+        <ImageView
+            android:id="@+id/frontpage_coffee_image"
+            android:layout_width="140dp"
+            android:layout_height="170dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/image_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frontpage_share_ic" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

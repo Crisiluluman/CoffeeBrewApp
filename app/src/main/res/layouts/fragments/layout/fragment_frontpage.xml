@@ -4,21 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="UI.Frontpage.FrontpageActivityFragment"
+    tools:context=".UI.Frontpage.FrontpageFragment"
     android:background="#A27250"
     >
 
 
-    <TextView
-        android:id="@+id/text_fronpage_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You are now on the frontpage"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frontpage_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="26dp"
-        />
+        tools:layout_editor_absoluteX="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
