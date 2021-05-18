@@ -317,12 +317,14 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
         return Uri.parse(path);
     }
 
+    /*
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
     }
+    */
 
     //Returns the file extension of the selected image: F.eks jpg or png
     private String getFileExtension(Uri uri) {

@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,9 @@ import com.example.coffeebrewapp.R;
 import com.example.coffeebrewapp.UI.Login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,12 +40,14 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private TextView usernameTextview;
 
+    private CircleImageView profileImage;
 
 
-    // Navigation controller should also be available to all classes
+    // These static variables are required to access specific Context, Nav_header elements and the NavController itself throughout the whole application
+    // I am not sure how to fix it otherwise..
     public static NavController navController;
-
-
+    public static NavigationView navigationView;
+    public static View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setContentView(R.layout.activity_main);
 
+        viewModel.init();
+
         //Check if signed in
         checkIfSignedIn();
-        
-        
+
+
         // Creating toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
         drawer.closeDrawer(Gravity.LEFT);
 
         // NavigationViewer
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
 
         //Sets username in navbar header when opening main activity
-        View header = navigationView.getHeaderView(0);
+        header = navigationView.getHeaderView(0);
         usernameTextview = header.findViewById(R.id.usernameText);
 
         // Setting the drawer buttons to open other fragments
@@ -80,9 +88,18 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        try {
+            CircleImageView profileImage = header.findViewById(R.id.nav_profile_image);
+            Picasso.with(this).load(viewModel.getCurrentProfileData().getImageURL()).into(profileImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+           // Toast.makeText(this, "Select a profile picture", Toast.LENGTH_SHORT).show();
+        }
 
     }
-    
+
+
+
     private void checkIfSignedIn() {
         viewModel.getCurrentUser().observe(this, user -> {
             if (user != null) {

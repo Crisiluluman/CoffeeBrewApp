@@ -18,12 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.coffeebrewapp.Data.Frontpage.FrontPageFeed;
 import com.example.coffeebrewapp.Data.Frontpage.FrontPageFeedAdapter;
 import com.example.coffeebrewapp.R;
+import com.example.coffeebrewapp.UI.Login.LoginActivity;
 import com.example.coffeebrewapp.UI.Main.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FrontpageFragment extends Fragment implements FrontPageFeedAdapter.OnListItemClickListener{
 

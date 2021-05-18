@@ -14,9 +14,12 @@ import com.example.coffeebrewapp.UI.Main.MainActivity;
 import com.example.coffeebrewapp.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.FirebaseApp;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginActivity extends AppCompatActivity {
 

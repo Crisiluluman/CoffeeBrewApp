@@ -68,7 +68,8 @@ public class CoffeeProductDAO {
             public void onDataChange(@NonNull DataSnapshot snapshot)
             {
                 coffeeList.clear();
-                for (DataSnapshot snap: snapshot.getChildren()) {
+                for (DataSnapshot snap: snapshot.getChildren())
+                {
                     CoffeeProduct coffeeProduct = snap.getValue(CoffeeProduct.class);
                     if (coffeeProduct.getCoffeeName().equals(productName))
                     {

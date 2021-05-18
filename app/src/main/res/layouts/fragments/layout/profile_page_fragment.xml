@@ -9,7 +9,7 @@
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
+        android:id="@+id/display_profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="10dp"
@@ -19,14 +19,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/edit_profile_page"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/ic_edit_profile_image"
-        app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/display_profile_image"
+        app:layout_constraintEnd_toEndOf="@+id/display_profile_image"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/circleImageView"
+        app:layout_constraintStart_toStartOf="@+id/display_profile_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -40,10 +41,10 @@
         android:textColor="#D5B7A1"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/display_profile_image" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edit_username_edittext"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
@@ -62,12 +63,12 @@
         android:text="Change password?"
         android:textColor="#D5B7A1"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintStart_toStartOf="@+id/edit_username_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/edit_username_edittext" />
 
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/type_old_password_edittext"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:background="@drawable/text_input_border"
@@ -78,26 +79,26 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/type_new_password_edittext"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/text_input_border"
         android:hint="Type new password"
         android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintStart_toStartOf="@+id/type_old_password_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/type_old_password_edittext" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/reType_new_password_edittext"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/text_input_border"
         android:hint="Retype new password"
         android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="@+id/editText3"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintStart_toStartOf="@+id/type_new_password_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/type_new_password_edittext" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
