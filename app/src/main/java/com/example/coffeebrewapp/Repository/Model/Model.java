@@ -1,22 +1,21 @@
 package com.example.coffeebrewapp.Repository.Model;
 
-import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
-import com.example.coffeebrewapp.Repository.Model.CoffeeReviews.SearchedCoffeeTestDAO;
+import com.example.coffeebrewapp.Repository.Model.SavedSelectedCoffeeName.SavedSelectedCoffeeName;
 
 public class Model implements IModel{
 
-    private static SearchedCoffeeTestDAO searchedCoffeeTestDAO = new SearchedCoffeeTestDAO();
+    private static SavedSelectedCoffeeName savedSelectedCoffeeName = new SavedSelectedCoffeeName();
 
 
 
-    // Testing stuff
+    // Getting and Setting coffeeName from SearchCoffeeFragment
     @Override
-    public void saveTestProduct(CoffeeProduct product) {
-        searchedCoffeeTestDAO.saveTestProduct(product);
+    public String getCoffeeFromSearch() {
+        return savedSelectedCoffeeName.getCoffeeFromSearch();
     }
 
     @Override
-    public CoffeeProduct getTestCoffee(int id) {
-        return searchedCoffeeTestDAO.getTestCoffee(id);
+    public void setCoffeeFromSearch(String name) {
+        savedSelectedCoffeeName.setCoffeeFromSearch(name);
     }
 }

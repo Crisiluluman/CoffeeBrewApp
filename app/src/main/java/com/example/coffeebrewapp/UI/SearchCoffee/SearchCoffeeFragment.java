@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +22,6 @@ import com.example.coffeebrewapp.UI.Main.MainActivity;
 import com.example.coffeebrewapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapter.OnListItemClickListener {
@@ -32,7 +32,6 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
 
     private RecyclerView recyclerView;
     private EditText sortCoffee;
-    private List<CoffeeProduct> coffeeList;
     private CoffeeProductAdapter coffeeAdapter;
 
 
@@ -51,8 +50,8 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
 
         // Floating button to add review page
         fab_add = layout.findViewById(R.id.floating_add_button);
-        fab_add.show(); //Hiding the search button whilst showing the add button
-        MainActivity.fab_search.hide();
+
+        fab_add.show(); //Shows the CreateCoffeeButton onCreateView
         fab_add.setOnClickListener(v -> {
             MainActivity.navController.navigate(R.id.nav_add_coffee_review);
         });
@@ -67,7 +66,7 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filter(s.toString());
+                coffeeAdapter.getFilter().filter(s.toString());
 
             }
 
@@ -82,49 +81,38 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.hasFixedSize();
 
-        //TODO: Set coffeelist from viewmodel
-        //coffeeList = viewModel.getAllCoffeeProducts().observeForever();
+        coffeeAdapter = new CoffeeProductAdapter(this, getLayoutInflater().getContext());
 
-        coffeeAdapter = new CoffeeProductAdapter(coffeeList, this);
+        //viewModel.getAllCoffeeProducts().observe(getViewLifecycleOwner(), coffeeAdapter::updatedList);
+        viewModel.getAllCoffeeProducts().observeForever(coffeeAdapter::updatedList); //Needs to be initilized both at Create and onStart
 
         recyclerView.setAdapter(coffeeAdapter);
 
-
+        coffeeAdapter.notifyDataSetChanged();
         return layout;
     }
 
-    private void filter (String text)
-    {
-        ArrayList<CoffeeProduct> filteredList = new ArrayList<>();
 
-        for (CoffeeProduct coffee: coffeeList)
-        {
 
-            if (coffee.getCoffeeName().toLowerCase().contains(text.toLowerCase()))
-            {
-            filteredList.add(coffee);
-            }
-        }
-        coffeeAdapter.filterList(filteredList);
+    @Override
+    public void onResume() {
+        fab_add.show(); //Shows the CreateCoffeeButton onResume of Fragment
+        viewModel.getAllCoffeeProducts().observeForever(coffeeAdapter::updatedList);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        fab_add.hide(); //Hides the CreateCoffeeButton on pausing of fragment
+        super.onPause();
     }
 
     @Override
     public void onClick(int position) {
-        //Creates mini test product
-        //TODO: DELETE this stuff
-        CoffeeProduct coffeeProduct = coffeeList.get(position);
-        saveTestItem(coffeeProduct);
-
-        //TODO: Fix it so it sends the position to SearchSelectedCoffeeFragment <-- That name tho
-
-
+        String name = coffeeAdapter.getProduct(position).getCoffeeName();
+        viewModel.setCoffeeFromSearch(name);
         MainActivity.navController.navigate(R.id.nav_search_selected_coffee);
-
     }
 
-    private void saveTestItem(CoffeeProduct product)
-    {
-        viewModel.saveTestProduct(product);
-    }
 
 }

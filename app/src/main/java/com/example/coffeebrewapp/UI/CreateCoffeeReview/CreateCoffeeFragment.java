@@ -2,9 +2,13 @@ package com.example.coffeebrewapp.UI.CreateCoffeeReview;
 
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +32,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
 import com.example.coffeebrewapp.UI.Main.MainActivity;
 import com.example.coffeebrewapp.R;
-import com.example.coffeebrewapp.UI.SearchCoffee.SearchCoffeeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,22 +49,25 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
     private CreateCoffeeViewModel viewModel;
 
     //Camera stuff
-    static final int REQUEST_IMAGE_CAPTURE = 1; // For taking photos
+    static final int REQUEST_IMAGE_CAPTURE = 2; // For taking photos
     static final int PICK_IMAGE_REQUEST = 1;    // For picking a photo from gallery
 
     private Button imageChooser;
     private EditText coffeeName;
     private ImageView coffeeImage;
-
-    private FloatingActionButton fabUploadButton;
-    private Spinner brewMethodsSpinner;
-
+    private ImageView cameraIcon;
     private RatingBar initialRating;
     private EditText coffeeDescription;
     private ProgressBar uploadingImageBar;
 
+    private FloatingActionButton fabUploadButton;
+    private Spinner brewMethodsSpinner;
+
     private String brewMethod; // Saves selected String from Spinner to be put into new CoffeeProduct
+    private String currentImagePath;
+
     private Uri imageUri;
+
 
 
     @Nullable
@@ -82,12 +94,17 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
 
 
         // Image handling
-        imageChooser = layout.findViewById(R.id.choose_coffee_image);
+        imageChooser = layout.findViewById(R.id.choose_filter_image);
+        cameraIcon = layout.findViewById(R.id.choose_camera_image);
 
         uploadingImageBar = layout.findViewById(R.id.upload_create_image);
-
         coffeeImage = layout.findViewById(R.id.chosen_coffee_image);
         coffeeName = layout.findViewById(R.id.enter_coffee_name);
+
+        cameraIcon.setOnClickListener(v -> {
+            //makePhoto();
+            dispatchTakePictureIntent();
+        });
 
         imageChooser.setOnClickListener(v -> {
             openFileChooser();
@@ -96,32 +113,69 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
 
 
         //Upload Floating button
-        SearchCoffeeFragment.fab_add.hide();    // Accessing floating buttons from main activity and hiding their visibility
-        MainActivity.fab_search.hide();
+        //SearchCoffeeFragment.fab_add.hide();    // Accessing floating buttons from main activity and hiding their visibility
+        //MainActivity.fab_search.hide();
 
         fabUploadButton = (FloatingActionButton) layout.findViewById(R.id.floating_upload_button);
         fabUploadButton.setOnClickListener(v -> {
             // Enabling their visibility again for the other fragments
-            SearchCoffeeFragment.fab_add.show();
-            MainActivity.fab_search.show();
+            //SearchCoffeeFragment.fab_add.show();
+            //MainActivity.fab_search.show();
 
-            //Sets variables for the CoffeeProduct
-            String uriExtension = getFileExtension(imageUri);
-            String sCoffeeName = coffeeName.getText().toString().trim();
-            float rating = initialRating.getRating();
-            String brew = brewMethod;
-            String description = coffeeDescription.getText().toString();
+            if (coffeeName.getText().toString().isEmpty()|| coffeeName.getText().toString().equals(null))
+            {
+                Toast.makeText(getContext(), "Please enter a coffee name", Toast.LENGTH_SHORT).show();
+            }
+            else if (coffeeImage.equals(null)/* || imageUri == null*/)
+            {
+                Toast.makeText(getContext(), "Please select an Image", Toast.LENGTH_SHORT).show();
+            }
 
-            viewModel.uploadToFirebase(imageUri, uriExtension, sCoffeeName, rating, brew, description);
+            else if (imageUri == null)
+            {
+                Toast.makeText(getContext(), "Image uri miustake", Toast.LENGTH_SHORT).show();
 
-            //Navigates to list of coffees
-            MainActivity.navController.navigate(R.id.nav_searchCoffee);
+            }
+
+            else if (initialRating.getRating() == 0.0)
+            {
+                Toast.makeText(getContext(), "Please rate your coffee product", Toast.LENGTH_SHORT).show();
+            }
+            else if (coffeeDescription.getText().toString().isEmpty() || coffeeDescription.getText().toString().equals(null))
+            {
+                Toast.makeText(getContext(), "Please add a small description", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                //Sets variables for the CoffeeProduct
+                String uriExtension = getFileExtension(imageUri);
+                String sCoffeeName = coffeeName.getText().toString().trim();
+                float rating = initialRating.getRating();
+                String brew = brewMethod;
+                String description = coffeeDescription.getText().toString();
+
+                viewModel.uploadToFirebase(imageUri, uriExtension, sCoffeeName);
+                viewModel.uploadObjectToFirebase(sCoffeeName ,rating, brew, description);
+
+                //Navigates to list of coffees
+                MainActivity.navController.navigate(R.id.nav_searchCoffee);
+            }
+
         });
 
-
-
-
         return layout;
+    }
+
+    @Override
+    public void onResume() {
+        fabUploadButton.show();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        fabUploadButton.hide();
+        super.onPause();
     }
 
 
@@ -129,46 +183,145 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
             case 0:
-                // TODO: Fix how to get string value
-                Toast.makeText(getActivity().getApplicationContext(), "Filter", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Filter selected", Toast.LENGTH_SHORT).show();
                 brewMethod = "Filter";
                 break;
 
             case 1:
-                Toast.makeText(getActivity().getApplicationContext(), "Stempel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Stempel selected", Toast.LENGTH_SHORT).show();
                 brewMethod = "Stempel";
                 break;
 
             case 2:
-                Toast.makeText(getActivity().getApplicationContext(), "Mocca", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Mocca selected", Toast.LENGTH_SHORT).show();
                 brewMethod = "Mocca";
                 break;
         }
     }
 
-    @Override
+    @Override //
     public void onNothingSelected(AdapterView<?> parent) {
         Toast.makeText(getActivity().getApplicationContext(), "No brew method selected", Toast.LENGTH_SHORT).show();
     }
 
 
-    // Upload image to firebase storage
+
+
+    // Opens camera on a users phone
+    private void dispatchTakePictureIntent() {
+        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getContext(), "Camera not able to open", Toast.LENGTH_SHORT).show();
+        }*/
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+
+    }
+
+/*    private File createImageFile() {
+        return null;
+    }
+
+    private void makePhoto() {
+        File f = createImageFile();
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        imageUri = Uri.fromFile(f);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(i, REQUEST_IMAGE_CAPTURE);
+    }
+*/
+    // Opens images on a users phone
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        //getContext().grantUriPermission(getActivity().getPackageName(), imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+       // intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+    //Runs the activity result for either camera or images
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null)
+/*
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK )
+        {
+            System.out.println("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            coffeeImage.setImageBitmap(imageBitmap);
+            Uri tempUri = getImageUri(getContext(),imageBitmap);
+            imageUri = tempUri;
+            System.out.println("\t\t\t WE ARE IN THE HOLE FATHER: "  + tempUri);
+            Toast.makeText(getActivity(),"Here "+ getRealPathFromURI(tempUri), Toast.LENGTH_LONG).show();
+        }
+*/
+
+
+        switch (requestCode)
+        {
+            case PICK_IMAGE_REQUEST:
+                imageUri = data.getData();
+                Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(coffeeImage);
+                break;
+
+            case REQUEST_IMAGE_CAPTURE:
+
+                try {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    coffeeImage.setImageBitmap(imageBitmap);
+                    Uri tempUri = getImageUri(getContext(),imageBitmap);
+                    imageUri = tempUri;
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    //This happens if the user first selects and image from their device, and thereafter tries to take a picture
+                    //with the camera, whilst the image from their device has already been selected
+                    MainActivity.navController.navigate(R.id.nav_searchCoffee);
+                    Toast.makeText(getContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+
+                }
+
+        }
+
+
+
+/*
+        if (requestCode == PICK_IMAGE_REQUEST  && resultCode == RESULT_OK  && data != null && data.getData() != null)
         {
             imageUri = data.getData();
             Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(coffeeImage);
         }
+        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK )
+        {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            coffeeImage.setImageBitmap(imageBitmap);
+            imageUri = data.getData();
+
+        }
+        */
     }
 
-    private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    private Uri getImageUri(Context context, Bitmap imageBitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), imageBitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
     }
 
     //Returns the file extension of the selected image: F.eks jpg or png

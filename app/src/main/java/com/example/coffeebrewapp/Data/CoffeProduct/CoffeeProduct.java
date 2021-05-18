@@ -11,16 +11,13 @@ public class CoffeeProduct {
     private String description;
 
     //TODO: How to handle unique ID? Everytime a product is created, it should have a unique ID
-    public CoffeeProduct(/*int ID, */String userId, String coffeeName, String imageUrl, float rating, String brewmethod, String description) {
-        //this.ID = ID;
-
+    public CoffeeProduct(String userId, String coffeeName, float rating, String brewmethod, String description) {
         if (coffeeName.trim().equals(""))
         {
             coffeeName = "No name written";
         }
         this.userId = userId;
         this.coffeeName = coffeeName;
-        this.imageSource = imageUrl;
         this.rating = rating;
         this.brewmethod = brewmethod;
         this.description = description;
@@ -31,7 +28,7 @@ public class CoffeeProduct {
     }
 
     //TODO: Delete after figuring out Firebase
-    private int ID; // Some ID that makes each item unique
+    private int ID;
 
     public int getID() {
         return ID;
@@ -41,8 +38,6 @@ public class CoffeeProduct {
         this.ID = ID;
     }
 
-
-    //Real stuff
     public String getUserId() {
         return userId;
     }

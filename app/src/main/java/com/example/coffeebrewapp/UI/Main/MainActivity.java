@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private TextView usernameTextview;
 
-    // Available floating buttons, so other fragments can hide them on their page
-    public static FloatingActionButton fab_search;
+
 
     // Navigation controller should also be available to all classes
     public static NavController navController;
@@ -81,13 +80,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
-        // Floating button to search page
-        fab_search = findViewById(R.id.floating_search_button);
-        fab_search.show();
-        fab_search.setOnClickListener(v -> {
-            navController.navigate(R.id.nav_searchCoffee);
-        });
 
     }
     
@@ -137,5 +129,6 @@ public class MainActivity extends AppCompatActivity {
     public void navMenuLogout(MenuItem item) {
         viewModel.signOut();
     }
+
 
 }

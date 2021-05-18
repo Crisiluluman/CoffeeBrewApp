@@ -4,7 +4,9 @@ import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
 
 public interface IModel {
 
-    //Testing stuff
-    void saveTestProduct(CoffeeProduct product);
-    CoffeeProduct getTestCoffee(int id);
+    //Returns the name of a coffee product that is selected from SearchCoffeeViewModel
+    String getCoffeeFromSearch();
+
+    //Sets the name of a coffee product in SearchSelectedViewModel
+    void setCoffeeFromSearch(String name);
 }

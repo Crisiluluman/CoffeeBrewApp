@@ -17,15 +17,16 @@ import java.util.List;
 public class SearchCoffeeViewModel extends AndroidViewModel {
 
 
-    private final IModel model = new Model();
     private final UserRepository userRepository;
     private final CoffeeProductDAO coffeeProductDAO;
+    private final IModel model;
 
 
     public SearchCoffeeViewModel(Application app) {
         super(app);
         userRepository = UserRepository.getInstance(app);
         coffeeProductDAO = CoffeeProductDAO.getInstance();
+        model = new Model();
     }
 
 
@@ -47,10 +48,11 @@ public class SearchCoffeeViewModel extends AndroidViewModel {
     }
 
 
-    //Testing stuff
-    public void saveTestProduct(CoffeeProduct product){
-        model.saveTestProduct(product);
+    public void setCoffeeFromSearch(String name) {
+        model.setCoffeeFromSearch(name);
     }
+
+
 
 
 

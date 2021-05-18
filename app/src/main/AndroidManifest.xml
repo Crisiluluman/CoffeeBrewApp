@@ -3,6 +3,10 @@
     package="com.example.coffeebrewapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -22,6 +26,7 @@
             android:theme="@style/Theme.CoffeeBrewApp.NoActionBar"
 
             >
+
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
@@ -34,7 +39,9 @@
         <activity android:name=".UI.Main.MainActivity"
             android:label="FrontPage"
             android:theme="@style/Theme.CoffeeBrewApp.NoActionBar"
-            >
+            android:windowSoftInputMode="adjustNothing"
+        >
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -16,12 +16,15 @@ import android.widget.Toast;
 import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
 import com.example.coffeebrewapp.R;
 import com.example.coffeebrewapp.UI.SearchCoffee.SearchCoffeeFragment;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchSelectedCoffeeFragment extends Fragment {
 
     SearchSelectedCoffeeViewModel viewModel;
-    CoffeeProduct coffeeTest;
 
     TextView coffeeName;
     ImageView coffeeImage;
@@ -32,33 +35,29 @@ public class SearchSelectedCoffeeFragment extends Fragment {
 
 
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_searched_selected_coffee, container, false);
         viewModel = new ViewModelProvider(this).get(SearchSelectedCoffeeViewModel.class);
 
-        //TODO: DELETE this is only for test and showcasing
-
 
         //Initializing the page with data
-        //TODO: Fix it to hook up to a database
-        coffeeTest = viewModel.getTestCoffee(0); // Selects the first item in the arraylist in the dao
         coffeeName = layout.findViewById(R.id.select_coffee_title);
-        coffeeName.setText(coffeeTest.getCoffeeName());
-
         coffeeImage = layout.findViewById(R.id.select_coffee_image);
-
-        //TODO: Needs to call other method to set the image in the recycler view
-        //coffeeImage.setImageResource(coffeeTest.getImageSource());
-
         coffeeRating = layout.findViewById(R.id.select_coffee_rating);
-        coffeeRating.setRating(coffeeTest.getRating());
-
         coffeeBrewIcon = layout.findViewById(R.id.select_coffee_icon);
-        brewmethod(coffeeTest.getBrewmethod());
-
         coffeeDescription = layout.findViewById(R.id.select_coffee_description);
-        coffeeDescription.setText(coffeeTest.getDescription());
+
+
+        CoffeeProduct product = viewModel.getProductFromName(viewModel.getCoffeeFromSearch());
+        coffeeName.setText(product.getCoffeeName());
+        coffeeRating.setRating(product.getRating());
+        Picasso.with(getContext()).load(product.getImageSource()).into(coffeeImage);
+        brewmethod(product.getBrewmethod());
+        coffeeDescription.setText(product.getDescription());
+
 
         coffeeRate = layout.findViewById(R.id.select_coffee_rate);
         coffeeRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -67,7 +66,6 @@ public class SearchSelectedCoffeeFragment extends Fragment {
                 Toast.makeText(layout.getContext(), "Rating " + rating, Toast.LENGTH_SHORT).show();
             }
         });
-
 
         return layout;
     }

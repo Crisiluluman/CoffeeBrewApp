@@ -2,13 +2,13 @@ package com.example.coffeebrewapp.Repository.RemoteDataSource.CoffeeProduct;
 
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
-import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProductLiveData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,19 +29,16 @@ public class CoffeeProductDAO {
 
     private static CoffeeProductDAO instance;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseAllCoffee;
     private StorageReference storageReference;
 
     private MutableLiveData<List<CoffeeProduct>> allCoffees;
-    private CoffeeProductLiveData coffeeProductLiveData;
+    private MutableLiveData<CoffeeProduct> liveCoffeeProduct;
 
 
     private CoffeeProductDAO()
     {
-        //databaseReference = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
 
-        //storageReference = FirebaseStorage.getInstance().getReference("CoffeeProducts_Images");
-        //coffeeProductLiveData = new CoffeeProductLiveData(databaseReference);
     }
 
     public static synchronized CoffeeProductDAO getInstance() {
@@ -52,7 +49,7 @@ public class CoffeeProductDAO {
 
 
     public void init(String userId) {
-        databaseReference = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
+        databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
 
         storageReference = FirebaseStorage.getInstance().getReference("CoffeeProducts_Images");
         //coffeeProductLiveData = new CoffeeProductLiveData(databaseReference);
@@ -61,22 +58,57 @@ public class CoffeeProductDAO {
     }
 
 
-
-    public LiveData<List<CoffeeProduct>> getAllCoffeeProducts()
+    public LiveData<List<CoffeeProduct>> getProductFromName(String productName)
     {
         List<CoffeeProduct> coffeeList = new ArrayList<>();
 
-        //TODO: Fix hardcoded userid here
-        DatabaseReference dbRef = databaseReference.child("jOZtgUhkRyWmrsE1G9hrfWwHaHG2");
-
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseAllCoffee.addValueEventListener(new ValueEventListener()
+        {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                coffeeList.clear();
                 for (DataSnapshot snap: snapshot.getChildren()) {
-                    CoffeeProduct coffeeProduct = snapshot.getValue(CoffeeProduct.class);
-                    coffeeList.add(coffeeProduct);
-                    System.out.println("\t Do we get here in LiveData method?");
+                    CoffeeProduct coffeeProduct = snap.getValue(CoffeeProduct.class);
+                    if (coffeeProduct.getCoffeeName().equals(productName))
+                    {
+                        coffeeList.add(coffeeProduct);
+                    }
+                    else if (productName.isEmpty())
+                    {
+                        coffeeList.add(coffeeProduct);
+                    }
                 }
+
+                allCoffees.setValue(coffeeList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return allCoffees;
+    }
+
+    public LiveData<List<CoffeeProduct>> getAllCoffeeProducts()
+    {
+
+        List<CoffeeProduct> coffeeList = new ArrayList<>();
+
+        databaseAllCoffee.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                coffeeList.clear();
+                for (DataSnapshot snap: snapshot.getChildren()) {
+                    CoffeeProduct coffeeProduct = snap.getValue(CoffeeProduct.class);
+
+                    coffeeList.add(coffeeProduct);
+
+                }
+
                 allCoffees.setValue(coffeeList);
             }
 
@@ -86,15 +118,43 @@ public class CoffeeProductDAO {
             }
         });
 
+/*
+        dbRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                allCoffees.getValue().add(snapshot.getValue(CoffeeProduct.class));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+*/
         return allCoffees;
     }
 
 
-    public void uploadToFirebase(Uri tempUri, String uriExtension, String userID, String sCoffeeName, float rating, String brew, String description)
+    public void uploadImageToFirebase(Uri tempUri, String uriExtension, String sCoffeeName)
     {
 
         //Maybe add some error handling if no image is selected
-        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + uriExtension);
+        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ":" + uriExtension);
 
         fileReference.putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -110,13 +170,14 @@ public class CoffeeProductDAO {
                 }, 500);
                 //Toast "Upload successfull" or something
 
-                //Creating the coffee product
-                CoffeeProduct productToBeUploaded = new CoffeeProduct(userID,sCoffeeName,taskSnapshot.getMetadata().getReference().getDownloadUrl().toString(),rating,brew,description);
+                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        databaseAllCoffee.child(sCoffeeName).child("imageSource").setValue(uri.toString());
+                        databaseAllCoffee.child(sCoffeeName).child("coffeeName").setValue(sCoffeeName);
+                    }
+                });
 
-                //String uploadId = databaseReference.push().getKey();
-                databaseReference.child(sCoffeeName).setValue(productToBeUploaded);
-
-                //TODO: REMEMBER THAT YOU CAN UPDATE BY USING .updateChildren() Instead of .setValue
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -131,5 +192,11 @@ public class CoffeeProductDAO {
         });
     }
 
+    public void uploadObjectToFirebase(String userID, String sCoffeeName, float rating, String brew, String description)
+    {
+        CoffeeProduct productToBeUploaded = new CoffeeProduct(userID,sCoffeeName,rating,brew,description);
+        databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
+
+    }
 
 }

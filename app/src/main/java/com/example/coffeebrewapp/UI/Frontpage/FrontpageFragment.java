@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.coffeebrewapp.Data.Frontpage.FrontPageFeed;
 import com.example.coffeebrewapp.Data.Frontpage.FrontPageFeedAdapter;
 import com.example.coffeebrewapp.R;
+import com.example.coffeebrewapp.UI.Main.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class FrontpageFragment extends Fragment implements FrontPageFeedAdapter.
     private List<FrontPageFeed> feedList;
     private FrontPageFeedAdapter frontPageFeedAdapter;
 
+    public static FloatingActionButton fab_search;
 
     @Nullable
     @Override
@@ -44,6 +48,12 @@ public class FrontpageFragment extends Fragment implements FrontPageFeedAdapter.
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.hasFixedSize();
+
+        // Floating button to search page
+        fab_search = layout.findViewById(R.id.floating_search_button);
+        fab_search.setOnClickListener(v -> {
+            MainActivity.navController.navigate(R.id.nav_searchCoffee);
+        });
 
         // Hardcoded test data
         feedList = new ArrayList<>();
@@ -62,6 +72,17 @@ public class FrontpageFragment extends Fragment implements FrontPageFeedAdapter.
 
     }
 
+    @Override
+    public void onResume() {
+        fab_search.show();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        fab_search.hide();
+        super.onPause();
+    }
 
     @Override
     public int onClick(int position) {

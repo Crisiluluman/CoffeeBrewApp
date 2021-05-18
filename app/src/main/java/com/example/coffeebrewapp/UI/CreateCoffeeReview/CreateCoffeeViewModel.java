@@ -29,17 +29,23 @@ public class CreateCoffeeViewModel  extends AndroidViewModel {
     }
 
     public void saveTestProduct(CoffeeProduct product){
-        model.saveTestProduct(product);
+       //model.se(product);
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {
         return userRepository.getCurrentUser();
     }
 
-    public void uploadToFirebase(Uri tempUri, String uriExtension,String sCoffeeName, float rating, String brew, String description)
+    public void uploadToFirebase(Uri tempUri, String uriExtension,String sCoffeeName)
+    {
+        coffeeProductDAO.uploadImageToFirebase(tempUri, uriExtension, sCoffeeName);
+    }
+
+    public void uploadObjectToFirebase(String sCoffeeName, float rating, String brew, String description)
     {
         String userID = getCurrentUser().getValue().getUid();
-        coffeeProductDAO.uploadToFirebase(tempUri, uriExtension, userID, sCoffeeName, rating, brew, description);
+        coffeeProductDAO.uploadObjectToFirebase(userID,sCoffeeName,rating,brew,description);
+
     }
 
 

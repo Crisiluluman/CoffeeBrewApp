@@ -22,15 +22,18 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdapter.ViewHolder>  {
+public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdapter.ViewHolder> implements Filterable {
 
     private List<CoffeeProduct> coffeeProductList;
+    private List<CoffeeProduct> filteredList;
 
-    OnListItemClickListener listener;
+    private OnListItemClickListener listener;
+    private Context context;
 
-    public CoffeeProductAdapter(List<CoffeeProduct> coffeeProductList, OnListItemClickListener listener) {
-        this.coffeeProductList = coffeeProductList;
+
+    public CoffeeProductAdapter(OnListItemClickListener listener, Context context) {
         this.listener = listener;
+        this.context = context;
     }
 
 
@@ -45,56 +48,98 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
     @Override
     public void onBindViewHolder(@NonNull CoffeeProductAdapter.ViewHolder holder, int position) {
         holder.coffeeProductName.setText(coffeeProductList.get(position).getCoffeeName());
-        holder.coffeeProductName.setText(coffeeProductList.get(position).getCoffeeName());
-
-        //TODO: Fix how to set image source
-        //holder.coffeeProductImage.setImageResource(coffeeProductList.get(position).));
-        //Picasso.with()
+        Picasso.with(context).load(coffeeProductList.get(position).getImageSource()).into(holder.coffeeProductImage);
         holder.coffeeProductRating.setRating(coffeeProductList.get(position).getRating());
         holder.coffeeProductBrewmethod.setText(coffeeProductList.get(position).getBrewmethod());
 
-        // Remember that the user id is not set here
-        // And remember that the description is not needed here
     }
 
     @Override
     public int getItemCount() {
-        return coffeeProductList.size();
+        return filteredList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView coffeeProductName;
+
         ImageView coffeeProductImage;
         RatingBar coffeeProductRating;
         TextView coffeeProductBrewmethod;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onClick(getAdapterPosition());
-                }
-            });
             coffeeProductName = itemView.findViewById(R.id.coffee_product_name);
             coffeeProductImage = itemView.findViewById(R.id.coffee_product_image);
             coffeeProductRating = itemView.findViewById(R.id.coffee_product_rating);
             coffeeProductBrewmethod = itemView.findViewById(R.id.coffee_product_brew);
+            itemView.setOnClickListener(this);
 
 
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onClick(getAbsoluteAdapterPosition());
+        }
     }
 
-    public interface OnListItemClickListener
-    {
+    public interface OnListItemClickListener {
         void onClick(int position);
     }
 
-    public void filterList(ArrayList<CoffeeProduct> filteredList)
-    {
-        coffeeProductList = filteredList;
+
+    public void updatedList(List<CoffeeProduct> coffeeProducts) {
+        filteredList = coffeeProductList;
+        coffeeProductList = coffeeProducts;
         notifyDataSetChanged();
     }
 
+
+    public CoffeeProduct getProduct(int position) {
+        return filteredList.get(position);
+    }
+
+    //Method for filtering
+    //TODO: Not working quite right
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            //For some reason if the CoffeeName has numbers in it, it makes this method react kinda weirdly... It only works on String/ CharSequences
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults filterResults = new FilterResults();
+                String searchStr = constraint.toString();
+
+                if (constraint == null || constraint.length() == 0) {
+                    filterResults.count = coffeeProductList.size();
+                    filterResults.values = coffeeProductList;
+
+                } else {
+                    final List<CoffeeProduct> resultsModel = new ArrayList<>();
+
+                    for (CoffeeProduct product : coffeeProductList) {
+                        if (product.getCoffeeName().toLowerCase().contains(searchStr)) {
+                            resultsModel.add(product);
+                        }
+                        filterResults.count = resultsModel.size();
+                        filterResults.values = resultsModel;
+                    }
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList = (List<CoffeeProduct>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
+    }
+
 }
+
+

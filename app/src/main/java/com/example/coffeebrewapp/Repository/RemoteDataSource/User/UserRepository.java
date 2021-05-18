@@ -30,12 +30,16 @@ public class UserRepository {
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {
+
+
+
         return currentUser;
     }
 
     public void signOut() {
-        AuthUI.getInstance()
-                .signOut(app.getApplicationContext());
+        AuthUI.getInstance().signOut(app.getApplicationContext());
     }
+
+
 
 }

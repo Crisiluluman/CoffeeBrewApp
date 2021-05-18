@@ -29,17 +29,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/choose_coffee_image"
+        android:id="@+id/choose_filter_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose file"
+        android:text="File"
         app:backgroundTint="#4D3626"
         app:layout_constraintBottom_toBottomOf="@+id/enter_coffee_name"
         app:layout_constraintEnd_toEndOf="@+id/chosen_coffee_image"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.267"
         app:layout_constraintStart_toEndOf="@+id/enter_coffee_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/choose_camera_image"
+        android:layout_width="48dp"
+        android:layout_height="39dp"
+        android:src="@drawable/ic_select_camera"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_filter_image"
+        app:layout_constraintEnd_toEndOf="@+id/chosen_coffee_image"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/choose_filter_image"
+        app:layout_constraintTop_toTopOf="@+id/choose_filter_image"
+        app:layout_constraintVertical_bias="0.6" />
 
     <ImageView
         android:id="@+id/chosen_coffee_image"
