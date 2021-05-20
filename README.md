@@ -14,21 +14,21 @@ ________________________________________________________________________________
 ## MoSCoW requirements ##
 
 **Must have** <br>
-- Profile page containing information and activity of the user                                                            <br>
-- Search function for finding the specific product                                                                        <br>
-- Sharing functionality to share experiences among friends and family                                                     <br>
-- Rating system for users to rate the products                                                                            <br>
+- Profile page containing information and activity of the user (Not activity can be seen)                                                    <br>
+- Search function for finding the specific product (Done)                                                                    <br>
+- Sharing functionality to share experiences among friends and family (Not done)                                             <br>
+- Rating system for users to rate the products (You can only give a rating to your own product)                                  <br>
 
 <br>
 
 **Should have** <br>
-- Google map function in order to pinpoint the local store at which the coffee was purchased                              <br>
-- Comment section where other users are able to comment on their friends activity                                         <br>
+- Google map function in order to pinpoint the local store at which the coffee was purchased (Not implemented)                             <br>
+- Comment section where other users are able to comment on their friends activity (Not implemented)                                        <br>
 
 <br>
 
 **Could have** <br>
-- Facebook friendly user login API, so that you can log in directly with facebook.                                        <br>
+- Facebook friendly user login API, so that you can log in directly with facebook. (Not working)                                       <br>
 
 <br>
 
