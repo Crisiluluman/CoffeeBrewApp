@@ -21,8 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.List;
-
 public class UserRepository {
 
     private final UserLiveData currentUser; // The data we work with
@@ -31,7 +29,7 @@ public class UserRepository {
     private final Application app;
     private static UserRepository instance;
 
-    private DatabaseReference databaseAllCoffee;
+    private DatabaseReference allUsersRef;
     private StorageReference storageReference;
     private ProfileData temp;
     private MutableLiveData<ProfileData> liveProfilData;
@@ -43,7 +41,7 @@ public class UserRepository {
 
 
     public void init() {
-        databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+        allUsersRef = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference("User_Images");
         liveProfilData  = new MutableLiveData<>();
         temp = new ProfileData();
@@ -99,7 +97,7 @@ public class UserRepository {
 
     public MutableLiveData<ProfileData> getCurrentUserProfileData() throws NullPointerException {
 
-        databaseAllCoffee.child(getCurrentUser().getValue().getDisplayName()).addValueEventListener(new ValueEventListener() {
+        allUsersRef.child(getCurrentUser().getValue().getDisplayName()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -154,13 +152,18 @@ public class UserRepository {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        databaseAllCoffee.child(username).child("username").setValue(getCurrentUser().getValue().getDisplayName());
-                        databaseAllCoffee.child(username).child("imageSource").setValue(uri.toString());
+                        allUsersRef.child(username).child("username").setValue(getCurrentUser().getValue().getDisplayName());
+                        allUsersRef.child(username).child("imageSource").setValue(uri.toString());
 
                     }
                 });
             }
         });
+
+    }
+
+    public void updateUsername(String oldUsername, String newUsername) {
+        allUsersRef.child(getCurrentUser().getValue().getDisplayName()).child("username").setValue(newUsername);
 
     }
 

@@ -118,21 +118,8 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
 
     public void updatedList(List<FrontPageFeed> frontPageFeeds) {
 
-        //TEsting stuff
-/*
-        try {
-            CoffeeProduct product = new CoffeeProduct("String userId", "String coffeeName", 4, "String brewmethod", "String description");
-            FrontPageFeed testFeed = new FrontPageFeed(product,null);
-            frontPageFeedList.add(testFeed);
-            System.out.println(testFeed.getURL());
-
-            frontPageFeedList = frontPageFeeds;
-            notifyDataSetChanged();
-        } catch (NullPointerException e) {
-            Toast.makeText(context, "THE BIG NULL", Toast.LENGTH_SHORT).show();
-        }
-*/
         frontPageFeedList = frontPageFeeds;
+
         notifyDataSetChanged();
     }
 

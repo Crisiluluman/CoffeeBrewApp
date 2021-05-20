@@ -20,25 +20,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="nav_edit_reviews">
+                  <entry key="nav_edit_review">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="228" />
-                            <option name="y" value="15" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="nav_followed_people">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-183" />
-                            <option name="y" value="312" />
+                            <option name="x" value="-187" />
+                            <option name="y" value="308" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -49,8 +37,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="34" />
-                            <option name="y" value="15" />
+                            <option name="x" value="39" />
+                            <option name="y" value="17" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -87,6 +75,18 @@
                           <Point>
                             <option name="x" value="34" />
                             <option name="y" value="-286" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="nav_user_reviews">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="234" />
+                            <option name="y" value="9" />
                           </Point>
                         </option>
                       </LayoutPositions>

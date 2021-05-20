@@ -13,7 +13,7 @@
             android:title="Liked people" />
 
         <item
-            android:id="@+id/nav_edit_reviews"
+            android:id="@+id/nav_user_reviews"
             android:icon="@drawable/ic_edit"
             android:title="Edit your reviews" />
 

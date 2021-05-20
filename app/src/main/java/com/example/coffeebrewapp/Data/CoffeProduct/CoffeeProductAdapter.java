@@ -10,7 +10,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -73,10 +72,10 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            coffeeProductName = itemView.findViewById(R.id.coffee_product_name);
-            coffeeProductImage = itemView.findViewById(R.id.coffee_product_image);
-            coffeeProductRating = itemView.findViewById(R.id.coffee_product_rating);
-            coffeeProductBrewmethod = itemView.findViewById(R.id.coffee_product_brew);
+            coffeeProductName = itemView.findViewById(R.id.user_review_coffee);
+            coffeeProductImage = itemView.findViewById(R.id.user_review_coffee_image);
+            coffeeProductRating = itemView.findViewById(R.id.user_review_coffee_rating);
+            coffeeProductBrewmethod = itemView.findViewById(R.id.user_review_coffee_brew);
             itemView.setOnClickListener(this);
 
 
@@ -96,6 +95,7 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
     public void updatedList(List<CoffeeProduct> coffeeProducts) {
         filteredList = coffeeProductList;
         coffeeProductList = coffeeProducts;
+
         notifyDataSetChanged();
     }
 
@@ -108,7 +108,6 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
 
 
     //Method for filtering
-    //TODO: Not working quite right fix it
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
@@ -123,7 +122,7 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
                 } else {
 
                     for (CoffeeProduct product : coffeeProductList) {
-                        if (product.getCoffeeName().toLowerCase().contains(constraint)) {
+                        if (product.getCoffeeName().toLowerCase().contains(filterPattern)) {
                             filtered.add(product);
                         }
                     }

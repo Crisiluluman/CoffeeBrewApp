@@ -41,7 +41,7 @@ public class SearchSelectedCoffeeViewModel  extends AndroidViewModel {
         return coffeeProductDAO.getSpecificProduct(coffeeName);
     }
 */
-
+/*
     public CoffeeProduct getProductFromName(String productName)
     {
         for (int i = 0; i < coffeeProductDAO.getProductFromName(productName).getValue().size(); i++) {
@@ -50,8 +50,11 @@ public class SearchSelectedCoffeeViewModel  extends AndroidViewModel {
                 return coffeeProductDAO.getProductFromName(productName).getValue().get(i);
             }
         }
-        System.out.println("TEST THE NULLPOINTER");
         return null;
+    }
+*/
+    public LiveData<CoffeeProduct> getProductFromName(){
+        return coffeeProductDAO.getProductFromName(getCoffeeFromSearch());
     }
 
     public String getCoffeeFromSearch()

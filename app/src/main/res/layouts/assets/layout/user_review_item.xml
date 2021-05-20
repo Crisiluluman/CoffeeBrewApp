@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/image_border"
+    android:backgroundTint="#fefefe"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- LinearLayout for the outside background -->
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_border"
+            android:orientation="vertical"
+            android:padding="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/user_review_coffee"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/user_review_coffee_image"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                app:shapeAppearanceOverlay="@style/roundedCornersSmall" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/user_review_coffee"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/user_review_coffee_rating"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/user_review_coffee_brew"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:gravity="center"
+            android:text="Brew method"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/user_review_coffee_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:outlineAmbientShadowColor="#376F4E"
+            android:outlineSpotShadowColor="#376F4E"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_review_coffee" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

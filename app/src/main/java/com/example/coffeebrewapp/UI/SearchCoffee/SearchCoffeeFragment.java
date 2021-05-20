@@ -31,8 +31,8 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
     public static FloatingActionButton fab_add;
 
     private RecyclerView recyclerView;
-    private EditText sortCoffee;
     private CoffeeProductAdapter coffeeAdapter;
+    private EditText sortCoffee;
 
 
     //Test one product
@@ -114,7 +114,4 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
         MainActivity.navController.navigate(R.id.nav_search_selected_coffee);
     }
 
-    public void filterBook(CharSequence s){
-
-    }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
+import com.example.coffeebrewapp.Repository.RemoteDataSource.CoffeeProduct.CoffeeProductDAO;
 import com.example.coffeebrewapp.Repository.RemoteDataSource.User.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -29,10 +30,6 @@ public class ProfilePageViewModel extends AndroidViewModel {
         userRepository.uploadProfileImage(imageUri, uriExtension);
     }
 
-    public void uploadNewUsername(String newUsername) {
-        //userRepository.uploadNewUsername(newUsername);
-    }
-
     public LiveData<FirebaseUser> getCurrentUser() {
         return userRepository.getCurrentUser();
     }
@@ -46,4 +43,6 @@ public class ProfilePageViewModel extends AndroidViewModel {
         }
         return null;
     }
+
+
 }

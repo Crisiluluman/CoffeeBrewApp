@@ -3,6 +3,7 @@ package com.example.coffeebrewapp.UI.SearchSelectedCoffee;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class SearchSelectedCoffeeFragment extends Fragment {
     RatingBar coffeeRate;
     TextView ratingNumberDisplay;
 
-
+    private CoffeeProduct product;
 
 
     @Override
@@ -51,15 +52,27 @@ public class SearchSelectedCoffeeFragment extends Fragment {
         coffeeDescription = layout.findViewById(R.id.select_coffee_description);
         ratingNumberDisplay = layout.findViewById(R.id.rating_display_number);
 
-        CoffeeProduct product = viewModel.getProductFromName(viewModel.getCoffeeFromSearch());
-        coffeeName.setText(product.getCoffeeName());
-        coffeeRating.setRating(product.getRating());
-        Picasso.with(getContext()).load(product.getImageSource()).into(coffeeImage);
-        brewmethod(product.getBrewmethod());
-        coffeeDescription.setText(product.getDescription());
+        //CoffeeProduct product = viewModel.getProductFromName(viewModel.getCoffeeFromSearch());
 
-        String ratingDisplay = Float.toString(product.getRating());
-        ratingNumberDisplay.setText(ratingDisplay);
+        final Observer<CoffeeProduct> dataObserved = new Observer<CoffeeProduct>() {
+            @Override
+            public void onChanged(CoffeeProduct coffeeProduct) {
+                product = coffeeProduct;
+
+                coffeeName.setText(product.getCoffeeName());
+                coffeeRating.setRating(product.getRating());
+                Picasso.with(getContext()).load(product.getImageSource()).into(coffeeImage);
+                brewmethod(product.getBrewmethod());
+                coffeeDescription.setText(product.getDescription());
+
+                String ratingDisplay = Float.toString(product.getRating());
+                ratingNumberDisplay.setText(ratingDisplay);
+            }
+        };
+        viewModel.getProductFromName().observe(getViewLifecycleOwner(), dataObserved);
+
+
+
 
         coffeeRate = layout.findViewById(R.id.select_coffee_rate);
         coffeeRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

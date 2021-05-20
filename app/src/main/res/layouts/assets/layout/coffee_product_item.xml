@@ -15,7 +15,7 @@
 
 <!-- LinearLayout for the outside background -->
         <LinearLayout
-            android:id="@+id/coffee_image_holder"
+            android:id="@+id/user_reviewed_coffee"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
             android:padding="3dp"
             >
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/coffee_product_image"
+            android:id="@+id/user_review_coffee_image"
             android:layout_gravity="center"
             android:layout_width="80dp"
             android:layout_height="match_parent"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
         <TextView
-            android:id="@+id/coffee_product_name"
+            android:id="@+id/user_review_coffee"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:gravity="center"
@@ -42,25 +42,26 @@
             android:textColor="#000000"
             android:textSize="28dp"
             android:layout_marginLeft="5dp"
-            app:layout_constraintStart_toEndOf="@+id/coffee_image_holder"
+            app:layout_constraintStart_toEndOf="@+id/user_reviewed_coffee"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/coffee_product_brew"
+            android:id="@+id/user_review_coffee_brew"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="Brew method"
             android:textColor="#000000"
             android:textSize="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/coffee_product_rating"
+            app:layout_constraintBottom_toTopOf="@+id/user_review_coffee_rating"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.993"
-            app:layout_constraintStart_toEndOf="@+id/coffee_product_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.884"
+            app:layout_constraintStart_toEndOf="@+id/user_review_coffee"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <RatingBar
-            android:id="@+id/coffee_product_rating"
+            android:id="@+id/user_review_coffee_rating"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:isIndicator="true"
@@ -73,8 +74,8 @@
             android:scaleY=".5"
             android:transformPivotX="0dp"
             android:transformPivotY="0dp"
-            app:layout_constraintStart_toEndOf="@+id/coffee_image_holder"
-            app:layout_constraintTop_toBottomOf="@+id/coffee_product_name" />
+            app:layout_constraintStart_toEndOf="@+id/user_reviewed_coffee"
+            app:layout_constraintTop_toBottomOf="@+id/user_review_coffee" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

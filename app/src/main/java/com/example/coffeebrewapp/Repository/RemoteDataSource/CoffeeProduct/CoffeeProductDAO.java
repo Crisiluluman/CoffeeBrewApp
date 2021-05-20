@@ -30,6 +30,7 @@ public class CoffeeProductDAO {
     private static CoffeeProductDAO instance;
 
     private DatabaseReference databaseAllCoffee;
+
     private StorageReference storageReference;
 
     private MutableLiveData<List<CoffeeProduct>> allCoffees;
@@ -55,8 +56,39 @@ public class CoffeeProductDAO {
 
     }
 
+    public LiveData<CoffeeProduct> getProductFromName(String productName)
+    {
+        MutableLiveData<CoffeeProduct> liveProduct = new MutableLiveData<>();
 
-    public LiveData<List<CoffeeProduct>> getProductFromName(String productName)
+        databaseAllCoffee.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                for (DataSnapshot snap: snapshot.getChildren())
+                {
+                    CoffeeProduct coffeeProduct = snap.getValue(CoffeeProduct.class);
+                    if (coffeeProduct.getCoffeeName().equals(productName))
+                    {
+                        coffeeProduct = snap.getValue(CoffeeProduct.class);
+
+                        liveProduct.setValue(coffeeProduct);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return liveProduct;
+    }
+
+    /*
+    public MutableLiveData<List<CoffeeProduct>> getProductFromName(String productName)
     {
         List<CoffeeProduct> coffeeList = new ArrayList<>();
 
@@ -89,6 +121,7 @@ public class CoffeeProductDAO {
         });
         return allCoffees;
     }
+     */
 
     public LiveData<List<CoffeeProduct>> getAllCoffeeProducts()
     {
@@ -199,4 +232,43 @@ public class CoffeeProductDAO {
 
     }
 
+
+    public LiveData<List<CoffeeProduct>> getUserReviews(String displayName)throws NullPointerException {
+
+        MutableLiveData<List<CoffeeProduct>> userReviews = new MutableLiveData<>(new ArrayList<>());
+        DatabaseReference dbRef = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
+        List<CoffeeProduct> coffeeList = new ArrayList<>();
+
+
+        dbRef.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                coffeeList.clear();
+                for (DataSnapshot snap: snapshot.getChildren()) {
+                    CoffeeProduct coffeeProduct = snap.getValue(CoffeeProduct.class);
+
+                    if (coffeeProduct.getUserId().equals(displayName))
+                    {
+                        coffeeList.add(coffeeProduct);
+
+                    }
+
+                }
+                System.out.println("THE SLICE IS: " + coffeeList.size());
+                userReviews.setValue(coffeeList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        System.out.println("THE SIZE IS: " + userReviews.getValue().size());
+
+        return userReviews;
+    }
 }
