@@ -54,5 +54,7 @@ ________________________________________________________________________________
 - https://firebase.google.com/docs/database/admin/retrieve-data								  <br>
 
 
+**Updating User profile** <br>
+- https://firebase.google.com/docs/auth/android/manage-users             <br>
 
 
