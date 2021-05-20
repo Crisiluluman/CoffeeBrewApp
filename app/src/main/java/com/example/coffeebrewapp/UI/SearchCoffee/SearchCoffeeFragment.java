@@ -45,7 +45,6 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
         View layout = inflater.inflate(R.layout.fragment_search_coffee, container, false);
         viewModel = new ViewModelProvider(this).get(SearchCoffeeViewModel.class);
 
-        //Getting single product test
         viewModel.init();
 
         // Floating button to add review page
@@ -83,7 +82,6 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
 
         coffeeAdapter = new CoffeeProductAdapter(this, getLayoutInflater().getContext());
 
-        //viewModel.getAllCoffeeProducts().observe(getViewLifecycleOwner(), coffeeAdapter::updatedList);
         viewModel.getAllCoffeeProducts().observeForever(coffeeAdapter::updatedList); //Needs to be initilized both at Create and onStart
 
         recyclerView.setAdapter(coffeeAdapter);

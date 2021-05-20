@@ -25,15 +25,15 @@ import java.util.List;
 
 public class SearchSelectedCoffeeFragment extends Fragment {
 
-    SearchSelectedCoffeeViewModel viewModel;
+    private SearchSelectedCoffeeViewModel viewModel;
 
-    TextView coffeeName;
-    ImageView coffeeImage;
-    RatingBar coffeeRating;
-    ImageView coffeeBrewIcon;
-    TextView coffeeDescription;
-    RatingBar coffeeRate;
-    TextView ratingNumberDisplay;
+    private  TextView coffeeName;
+    private ImageView coffeeImage;
+    private  RatingBar coffeeRating;
+    private ImageView coffeeBrewIcon;
+    private TextView coffeeDescription;
+    private RatingBar coffeeRate;
+    private TextView ratingNumberDisplay;
 
     private CoffeeProduct product;
 
@@ -52,7 +52,6 @@ public class SearchSelectedCoffeeFragment extends Fragment {
         coffeeDescription = layout.findViewById(R.id.select_coffee_description);
         ratingNumberDisplay = layout.findViewById(R.id.rating_display_number);
 
-        //CoffeeProduct product = viewModel.getProductFromName(viewModel.getCoffeeFromSearch());
 
         final Observer<CoffeeProduct> dataObserved = new Observer<CoffeeProduct>() {
             @Override
@@ -72,8 +71,7 @@ public class SearchSelectedCoffeeFragment extends Fragment {
         viewModel.getProductFromName().observe(getViewLifecycleOwner(), dataObserved);
 
 
-
-
+        //Should ideally add the number to firebase and set the Rating to an average off all ratings
         coffeeRate = layout.findViewById(R.id.select_coffee_rate);
         coffeeRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

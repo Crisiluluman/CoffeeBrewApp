@@ -74,11 +74,8 @@ public class CoffeeProductDAO {
 
                         liveProduct.setValue(coffeeProduct);
                     }
-
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -87,41 +84,6 @@ public class CoffeeProductDAO {
         return liveProduct;
     }
 
-    /*
-    public MutableLiveData<List<CoffeeProduct>> getProductFromName(String productName)
-    {
-        List<CoffeeProduct> coffeeList = new ArrayList<>();
-
-        databaseAllCoffee.addValueEventListener(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                coffeeList.clear();
-                for (DataSnapshot snap: snapshot.getChildren())
-                {
-                    CoffeeProduct coffeeProduct = snap.getValue(CoffeeProduct.class);
-                    if (coffeeProduct.getCoffeeName().equals(productName))
-                    {
-                        coffeeList.add(coffeeProduct);
-                    }
-                    else if (productName.isEmpty())
-                    {
-                        coffeeList.add(coffeeProduct);
-                    }
-                }
-
-                allCoffees.setValue(coffeeList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return allCoffees;
-    }
-     */
 
     public LiveData<List<CoffeeProduct>> getAllCoffeeProducts()
     {
@@ -150,34 +112,6 @@ public class CoffeeProductDAO {
             }
         });
 
-/*
-        dbRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                allCoffees.getValue().add(snapshot.getValue(CoffeeProduct.class));
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-*/
         return allCoffees;
     }
 
@@ -192,16 +126,7 @@ public class CoffeeProductDAO {
         fileReference.putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //Sets the progress bar to zeo, as the file has been uploaded
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Delays the reset of progress bar for half a second
-                        // Than sets the progress bar to zero again
-                    }
-                }, 500);
-                //Toast "Upload successfull" or something
+                //Should add some code for the progress bar
 
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -224,7 +149,6 @@ public class CoffeeProductDAO {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) throws NullPointerException {
-                //Should give the user a warning if no image is selected
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -237,7 +161,6 @@ public class CoffeeProductDAO {
     public void uploadObjectToFirebase(String userID, String sCoffeeName, float rating, String brew, String description, String oldCoffeName)
     {
         CoffeeProduct productToBeUploaded = new CoffeeProduct(userID,sCoffeeName,rating,brew,description);
-        //databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
 
         if (oldCoffeName.equals(sCoffeeName)){
             databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
@@ -251,17 +174,7 @@ public class CoffeeProductDAO {
         databaseAllCoffee.child(oldCoffeName).child("userId").setValue(userID);
         databaseAllCoffee.child(oldCoffeName).child("rating").setValue(rating);
         }
-        /*if (databaseAllCoffee.child(s).equals(sCoffeeName))
-        {
-            databaseAllCoffee.child(sCoffeeName).setValue(sCoffeeName);
-            databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
-        }
-        else
-            {
 
-
-
-            }*/
 
     }
 
@@ -271,7 +184,6 @@ public class CoffeeProductDAO {
         MutableLiveData<List<CoffeeProduct>> userReviews = new MutableLiveData<>(new ArrayList<>());
         DatabaseReference dbRef = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
         List<CoffeeProduct> coffeeList = new ArrayList<>();
-
 
         dbRef.addValueEventListener(new ValueEventListener()
         {
@@ -285,22 +197,16 @@ public class CoffeeProductDAO {
                     if (coffeeProduct.getUserId().equals(displayName))
                     {
                         coffeeList.add(coffeeProduct);
-
                     }
-
                 }
-                System.out.println("THE SLICE IS: " + coffeeList.size());
                 userReviews.setValue(coffeeList);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
-        System.out.println("THE SIZE IS: " + userReviews.getValue().size());
 
         return userReviews;
     }

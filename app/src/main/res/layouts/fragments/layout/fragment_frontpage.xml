@@ -8,8 +8,6 @@
     android:background="#A27250"
     >
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/frontpage_recycler"
         android:layout_width="match_parent"

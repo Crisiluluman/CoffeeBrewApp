@@ -33,6 +33,7 @@
         app:layout_constraintTop_toTopOf="@+id/include"
         app:layout_constraintVertical_bias="1.0" />
     <!--
+    This is code for when I want to fix the actual login screen
         <EditText
             android:id="@+id/usernameInput"
             android:layout_width="281dp"

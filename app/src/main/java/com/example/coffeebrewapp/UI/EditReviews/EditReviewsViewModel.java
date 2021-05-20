@@ -26,8 +26,6 @@ public class EditReviewsViewModel extends AndroidViewModel {
         model = new Model();
     }
 
-
-
     public String getCoffeeFromSearch() {
         return model.getCoffeeFromSearch();
     }
@@ -57,18 +55,4 @@ public class EditReviewsViewModel extends AndroidViewModel {
 
     }
 
-    /*
-    public CoffeeProduct getProductFromName(String productName)
-    {
-        for (int i = 0; i < coffeeProductDAO.getProductFromName(productName).getValue().size(); i++) {
-            if (coffeeProductDAO.getProductFromName(productName).getValue().get(i).getCoffeeName().equals(productName))
-            {
-                System.out.println(coffeeProductDAO.getProductFromName(productName).getValue().get(i).getCoffeeName());
-                return coffeeProductDAO.getProductFromName(productName).getValue().get(i);
-            }
-        }
-        return null;
-    }
-
-     */
 }

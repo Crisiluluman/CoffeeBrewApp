@@ -29,15 +29,10 @@ public class SearchCoffeeViewModel extends AndroidViewModel {
         model = new Model();
     }
 
-
-
     public LiveData<List<CoffeeProduct>> getAllCoffeeProducts() {
        return coffeeProductDAO.getAllCoffeeProducts();
     }
 
-
-
-    //User initialization stuff
     public LiveData<FirebaseUser> getCurrentUser() {
         return userRepository.getCurrentUser();
     }

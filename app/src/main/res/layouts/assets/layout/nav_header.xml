@@ -7,7 +7,6 @@
     android:padding="16dp"
 
     >
-    <!-- Ask Kasper about the layout_height line 5 -->
 
     <LinearLayout
         android:layout_marginTop="30dp"
@@ -39,7 +38,7 @@
     </LinearLayout>
 
 
-
+<!-- Some text a user should be able to change
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,6 +49,6 @@
         android:textColor="#D5B7A1"
 
         />
-
+ -->
 
 </LinearLayout>

@@ -34,25 +34,7 @@ public class SearchSelectedCoffeeViewModel  extends AndroidViewModel {
         return userRepository.getCurrentUser();
     }
 
-/*
-    public LiveData<CoffeeProduct> getSpecificProduct(String coffeeName)
 
-    {
-        return coffeeProductDAO.getSpecificProduct(coffeeName);
-    }
-*/
-/*
-    public CoffeeProduct getProductFromName(String productName)
-    {
-        for (int i = 0; i < coffeeProductDAO.getProductFromName(productName).getValue().size(); i++) {
-            if (coffeeProductDAO.getProductFromName(productName).getValue().get(i).getCoffeeName().equals(productName))
-            {
-                return coffeeProductDAO.getProductFromName(productName).getValue().get(i);
-            }
-        }
-        return null;
-    }
-*/
     public LiveData<CoffeeProduct> getProductFromName(){
         return coffeeProductDAO.getProductFromName(getCoffeeFromSearch());
     }

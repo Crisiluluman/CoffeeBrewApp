@@ -64,7 +64,6 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
     private Spinner brewMethodsSpinner;
 
     private String brewMethod; // Saves selected String from Spinner to be put into new CoffeeProduct
-    private String currentImagePath;
 
     private Uri imageUri;
 
@@ -91,8 +90,6 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
         //Coffee description
         coffeeDescription = layout.findViewById(R.id.enter_coffee_description);
 
-
-
         // Image handling
         imageChooser = layout.findViewById(R.id.choose_filter_image);
         cameraIcon = layout.findViewById(R.id.choose_camera_image);
@@ -112,15 +109,8 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
 
 
 
-        //Upload Floating button
-        //SearchCoffeeFragment.fab_add.hide();    // Accessing floating buttons from main activity and hiding their visibility
-        //MainActivity.fab_search.hide();
-
         fabUploadButton = (FloatingActionButton) layout.findViewById(R.id.floating_upload_button);
         fabUploadButton.setOnClickListener(v -> {
-            // Enabling their visibility again for the other fragments
-            //SearchCoffeeFragment.fab_add.show();
-            //MainActivity.fab_search.show();
 
             if (coffeeName.getText().toString().isEmpty()|| coffeeName.getText().toString().equals(null))
             {
@@ -154,7 +144,7 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
                 String brew = brewMethod;
                 String description = coffeeDescription.getText().toString();
 
-                viewModel.uploadToFirebase(imageUri, uriExtension, sCoffeeName, sCoffeeName); //This makes it so that you can change products when creating..
+                viewModel.uploadToFirebase(imageUri, uriExtension, sCoffeeName, sCoffeeName); //This makes it so that you can change products when creating.. Not optimal
                 viewModel.uploadObjectToFirebase(sCoffeeName ,rating, brew, description, sCoffeeName);
 
                 //Navigates to list of coffees
@@ -209,38 +199,17 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
 
     // Opens camera on a users phone
     private void dispatchTakePictureIntent() {
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(getContext(), "Camera not able to open", Toast.LENGTH_SHORT).show();
-        }*/
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 
     }
 
-/*    private File createImageFile() {
-        return null;
-    }
-
-    private void makePhoto() {
-        File f = createImageFile();
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        imageUri = Uri.fromFile(f);
-        i.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(i, REQUEST_IMAGE_CAPTURE);
-    }
-*/
     // Opens images on a users phone
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        //getContext().grantUriPermission(getActivity().getPackageName(), imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-       // intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
     }
 
@@ -248,21 +217,6 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-/*
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK )
-        {
-            System.out.println("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            coffeeImage.setImageBitmap(imageBitmap);
-            Uri tempUri = getImageUri(getContext(),imageBitmap);
-            imageUri = tempUri;
-            System.out.println("\t\t\t WE ARE IN THE HOLE FATHER: "  + tempUri);
-            Toast.makeText(getActivity(),"Here "+ getRealPathFromURI(tempUri), Toast.LENGTH_LONG).show();
-        }
-*/
 
 
         switch (requestCode)
@@ -297,38 +251,15 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
 
 
 
-/*
-        if (requestCode == PICK_IMAGE_REQUEST  && resultCode == RESULT_OK  && data != null && data.getData() != null)
-        {
-            imageUri = data.getData();
-            Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(coffeeImage);
-        }
-        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK )
-        {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            coffeeImage.setImageBitmap(imageBitmap);
-            imageUri = data.getData();
-
-        }
-        */
     }
 
+    //Retuns camera URI
     private Uri getImageUri(Context context, Bitmap imageBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), imageBitmap, "Title", null);
         return Uri.parse(path);
     }
-
-    /*
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
-    */
 
     //Returns the file extension of the selected image: F.eks jpg or png
     private String getFileExtension(Uri uri) {

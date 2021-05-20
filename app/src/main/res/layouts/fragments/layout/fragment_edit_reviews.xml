@@ -8,9 +8,6 @@
     >
 
 
-
-
-    <!--TODO: DELETE IMAGE, this is just for testing -->
     <EditText
         android:id="@+id/edit_coffee_name"
         android:focusable="false"
@@ -64,10 +61,6 @@
         app:layout_constraintVertical_bias="0.562"
         />
 
-
-    <!-- TODO: Optimally add custom coffee icons -->
-    <!-- Also, why does the bar not full out entire space? scale maybe? -->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/edit_save_changes"
         android:layout_width="wrap_content"
@@ -95,8 +88,6 @@
         app:layout_constraintEnd_toEndOf="@+id/edit_coffee_image_provided"
         app:layout_constraintStart_toStartOf="@+id/edit_coffee_image_provided"
         app:layout_constraintTop_toBottomOf="@+id/edit_coffee_image_provided" />
-
-    <!-- TODO: Fix colors -->
 
     <TextView
         android:id="@+id/edit_rating_title"

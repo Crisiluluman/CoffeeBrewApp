@@ -50,7 +50,8 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
         thumbsUp.setImageResource(R.drawable.ic_thumb_up);
 
 
-        //TODO: Fix buttons so they can only be pressed once (switch)
+        //Buttons works more than once, should only be working once
+        //For either upvote or downvote
         thumbsDown.setOnClickListener(v -> {
             int temp = frontPageFeedList.get(clickedVote).getFeedRating();
             frontPageFeedList.get(clickedVote).setFeedRating(temp - 1);
@@ -145,7 +146,6 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: Fix that the view needs to be clicked before the position can be set
                     clickedVote = getLayoutPosition();
                     listener.onClick(getLayoutPosition());
                 }
@@ -175,7 +175,7 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
     }
 
 
-    //TODO: Implement sort func for when stuff is upvoted
+    //List to order by feed ranking, not implemented yet
     public void orderedList(ArrayList<FrontPageFeed> orderedList) {
         frontPageFeedList = orderedList;
         notifyDataSetChanged();

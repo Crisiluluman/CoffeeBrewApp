@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
                 // .setLogo(R.drawable.logo)
+                // Ideally fix this to be the profile image of a user in the future
                 .build();
 
         startActivityForResult(signInIntent, RC_SIGN_IN);

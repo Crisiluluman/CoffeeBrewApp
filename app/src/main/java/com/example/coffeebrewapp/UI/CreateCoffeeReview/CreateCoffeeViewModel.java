@@ -28,8 +28,8 @@ public class CreateCoffeeViewModel  extends AndroidViewModel {
 
     }
 
-    public void saveTestProduct(CoffeeProduct product){
-       //model.se(product);
+    public void init() {
+        coffeeProductDAO.init();
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {
@@ -49,8 +49,4 @@ public class CreateCoffeeViewModel  extends AndroidViewModel {
     }
 
 
-    public void init() {
-        String userId = getCurrentUser().getValue().getUid();
-        coffeeProductDAO.init();
-    }
 }

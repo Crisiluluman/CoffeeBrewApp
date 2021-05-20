@@ -63,38 +63,6 @@ public class UserRepository {
     }
 
 
-/*
-    public LiveData<List<ProfileData>> getAllUserData(String username)
-    {
-        System.out.println("\t\t JEG HADER ANDROID EFTERHÅNDEN");
-        List<ProfileData> dataList = new ArrayList<>();
-
-        databaseAllCoffee.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snap: snapshot.getChildren())
-                {
-                    ProfileData data = snap.getValue(ProfileData.class);
-                    System.out.println("\t\t JEG HADER ANDROID EFTERHÅNDEN MEST");
-
-                    if (data.getUsername().equals(username))
-                    {
-                        dataList.add(data);
-                    }
-                    allProfiles.setValue(dataList);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return allProfiles;
-    }
-*/
-
     public MutableLiveData<ProfileData> getCurrentUserProfileData() throws NullPointerException {
 
         allUsersRef.child(getCurrentUser().getValue().getDisplayName()).addValueEventListener(new ValueEventListener() {
@@ -116,28 +84,6 @@ public class UserRepository {
         return liveProfilData;
     }
 
-/*
-    public ProfileData getCurrentUserProfileData()throws NullPointerException
-    {
-
-        databaseAllCoffee.child("Crisiluluman");
-
-        databaseAllCoffee.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                temp = snapshot.getValue(ProfileData.class);
-//                System.out.println("LET ME IN, LET ME IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN" + temp.getImageURL());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return temp;
-    }*/
 
     public void uploadProfileImage(Uri imageUri, String uriExtension) {
 
@@ -167,22 +113,4 @@ public class UserRepository {
 
     }
 
- /*   public void uploadNewUsername(String newUsername) {
-
-        //Current username
-        String username = getCurrentUser().getValue().getDisplayName();
-
-        databaseAllCoffee.child(username).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseAllCoffee.child(username).setValue(newUsername);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }*/
 }

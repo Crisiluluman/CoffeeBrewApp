@@ -22,7 +22,6 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(Application app) {
         super(app);
         userRepository = UserRepository.getInstance(app);
-        //CoffeDAO
     }
 
     public void signOut()

@@ -54,11 +54,13 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
 
     private String newBrewMethod;
     private Uri newImageURI;
-    String oldCoffeeName;
+    private String oldCoffeeName;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //This class runs similar to the CreateCoffeeProduct, but ideally there should be functionality to ONLY update coffee products that are tied to the specific user
+        //That has not been implemented though
         View layout = inflater.inflate(R.layout.fragment_edit_reviews, container, false);
         viewModel = new ViewModelProvider(this).get(EditReviewsViewModel.class);
 
@@ -172,38 +174,17 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
 
     // Opens camera on a users phone
     private void dispatchTakePictureIntent() {
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(getContext(), "Camera not able to open", Toast.LENGTH_SHORT).show();
-        }*/
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, newImageURI);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 
     }
 
-    /*    private File createImageFile() {
-            return null;
-        }
-
-        private void makePhoto() {
-            File f = createImageFile();
-            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            imageUri = Uri.fromFile(f);
-            i.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(i, REQUEST_IMAGE_CAPTURE);
-        }
-    */
     // Opens images on a users phone
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        //getContext().grantUriPermission(getActivity().getPackageName(), imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-        // intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
@@ -212,21 +193,7 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-/*
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK )
-        {
-            System.out.println("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            coffeeImage.setImageBitmap(imageBitmap);
-            Uri tempUri = getImageUri(getContext(),imageBitmap);
-            imageUri = tempUri;
-            System.out.println("\t\t\t WE ARE IN THE HOLE FATHER: "  + tempUri);
-            Toast.makeText(getActivity(),"Here "+ getRealPathFromURI(tempUri), Toast.LENGTH_LONG).show();
-        }
-*/
-
+        //Update the switch to use requestCode and resultCode for a more error handling
 
         switch (requestCode) {
             case PICK_IMAGE_REQUEST:
@@ -254,43 +221,17 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
                     Toast.makeText(getContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
 
                 }
-
         }
 
-
-
-/*
-        if (requestCode == PICK_IMAGE_REQUEST  && resultCode == RESULT_OK  && data != null && data.getData() != null)
-        {
-            imageUri = data.getData();
-            Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(coffeeImage);
-        }
-        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK )
-        {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            coffeeImage.setImageBitmap(imageBitmap);
-            imageUri = data.getData();
-
-        }
-        */
     }
 
+    //Returns the Uri path of the image taken with Camera
     private Uri getImageUri(Context context, Bitmap imageBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), imageBitmap, "Title", null);
         return Uri.parse(path);
     }
-
-    /*
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
-    */
 
     //Returns the file extension of the selected image: F.eks jpg or png
     private String getFileExtension(Uri uri) {

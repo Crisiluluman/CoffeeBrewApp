@@ -9,11 +9,6 @@
 
     >
 
-
-    <!-- TODO: How to add image so that other users (on another phone) can access the image=? -->
-
-
-    <!--TODO: DELETE IMAGE, this is just for testing -->
     <EditText
         android:id="@+id/enter_coffee_name"
         android:layout_width="155dp"
@@ -66,10 +61,6 @@
         app:layout_constraintVertical_bias="0.562"
         />
 
-
-    <!-- TODO: Optimally add custom coffee icons -->
-    <!-- Also, why does the bar not full out entire space? scale maybe? -->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_upload_button"
         android:layout_width="wrap_content"
@@ -98,7 +89,6 @@
         app:layout_constraintStart_toStartOf="@+id/chosen_coffee_image"
         app:layout_constraintTop_toBottomOf="@+id/chosen_coffee_image" />
 
-    <!-- TODO: Fix colors -->
 
     <TextView
         android:id="@+id/rating_title"

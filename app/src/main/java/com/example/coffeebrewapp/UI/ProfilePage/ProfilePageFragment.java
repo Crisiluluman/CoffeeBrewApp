@@ -59,7 +59,7 @@ public class ProfilePageFragment extends Fragment {
 
             if (!usernameInput.getText().toString().equals(viewModel.getCurrentUser().getValue().getDisplayName()))
             {
-                //Not implemented yet
+                //Should ideally update the username, but that is not implemented yet
             }
             else {
 
@@ -126,29 +126,3 @@ public class ProfilePageFragment extends Fragment {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 }
-
-/*
-* /*
-*
-            if (usernameInput.getText().toString().equals(viewModel.getCurrentUser().getValue().getDisplayName())) {
-                //No changes
-            }
-            if (!usernameInput.getText().toString().equals(viewModel.getCurrentUser().getValue().getDisplayName()))
-            {
-                viewModel.uploadNewUsername(usernameInput.getText().toString());
-            }
-            else
-                {
-                try {
-                        String uriExtension = getFileExtension(imageUri);
-                        viewModel.uploadProfileImage(imageUri, uriExtension);
-                        } catch (NullPointerException e) {
-                        Toast.makeText(getContext(), "Only press this button if you've made changes", Toast.LENGTH_SHORT).show();
-                        }
-
-                        //  }
-*
-*
-*
-*
-* */

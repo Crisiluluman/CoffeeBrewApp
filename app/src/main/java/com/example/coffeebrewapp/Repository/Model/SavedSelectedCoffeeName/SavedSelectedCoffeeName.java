@@ -4,7 +4,6 @@ import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
 
 import java.util.ArrayList;
 
-//TODO: Delete test class
 
 public class SavedSelectedCoffeeName {
 

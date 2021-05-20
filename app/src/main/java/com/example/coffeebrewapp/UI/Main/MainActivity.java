@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     // These static variables are required to access specific Context, Nav_header elements and the NavController itself throughout the whole application
-    // I am not sure how to fix it otherwise..
     public static NavController navController;
     public static NavigationView navigationView;
     public static View header;
@@ -57,11 +56,9 @@ public class MainActivity extends AppCompatActivity {
         //Check if signed in
         checkIfSignedIn();
 
-
         // Creating toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         // Creating drawer and setting it to close when clicking?
         drawer = findViewById(R.id.drawer_layout);
@@ -69,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         // NavigationViewer
         navigationView = findViewById(R.id.nav_view);
-
 
         //Sets username in navbar header when opening main activity
         header = navigationView.getHeaderView(0);
@@ -84,22 +80,13 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-/*
-        try {
-            CircleImageView profileImage = header.findViewById(R.id.nav_profile_image);
-            Picasso.with(this).load(viewModel.getCurrentProfileData().getImageURL()).into(profileImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-           // Toast.makeText(this, "Select a profile picture", Toast.LENGTH_SHORT).show();
-        }
-*/
+
 
         CircleImageView profileImage = MainActivity.header.findViewById(R.id.nav_profile_image);
 
         final Observer<ProfileData> dataObserved = new Observer<ProfileData>() {
             @Override
             public void onChanged(ProfileData profileData) {
-
                 try {
                     Picasso.with(MainActivity.header.getContext()).load(profileData.getImageSource()).into(profileImage);
                 } catch (Exception e) {
@@ -111,9 +98,7 @@ public class MainActivity extends AppCompatActivity {
         };
         viewModel.getCurrentProfileData().observe(this, dataObserved);
 
-
     }
-
 
     private void checkIfSignedIn() {
         viewModel.getCurrentUser().observe(this, user -> {
