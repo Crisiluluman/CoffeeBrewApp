@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,10 +44,6 @@ public class UserReviewsFragment extends Fragment implements UserReviewsCoffePro
 
         try {
             viewModel.getUserReviews().observe(getViewLifecycleOwner(),reviewsAdapter::updatedList);
-            if (viewModel.getUserReviews().getValue().size()==0)
-            {
-                Toast.makeText(getContext(), "You have no reviews, go make some! :)", Toast.LENGTH_SHORT).show();
-            }
         } catch (NullPointerException e) {
             Toast.makeText(getContext(), "You have no reviews, go make some! :)", Toast.LENGTH_SHORT).show();
         }

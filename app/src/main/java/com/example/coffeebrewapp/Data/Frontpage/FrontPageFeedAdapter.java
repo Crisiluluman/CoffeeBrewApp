@@ -82,14 +82,14 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
         holder.mapsIcon.setImageResource(R.drawable.ic_maps);
 
         //Data
-        Picasso.with(context).load(frontPageFeedList.get(position).getURL()).into(holder.userImage);
+        Picasso.get().load(frontPageFeedList.get(position).getURL()).into(holder.userImage);
         holder.username.setText(frontPageFeedList.get(position).getCoffeeProduct().getUserId());
 
         holder.coffeeName.setText(frontPageFeedList.get(position).getCoffeeProduct().getCoffeeName());
         holder.coffeeRating.setRating(frontPageFeedList.get(position).getCoffeeProduct().getRating());
         holder.thumbsUp.setImageResource(R.drawable.ic_thumb_up);
 
-        Picasso.with(context).load(frontPageFeedList.get(position).getCoffeeProduct().getImageSource()).into(holder.coffeeImage);
+        Picasso.get().load(frontPageFeedList.get(position).getCoffeeProduct().getImageSource()).into(holder.coffeeImage);
 
 
         // Sets icon depending on brew method

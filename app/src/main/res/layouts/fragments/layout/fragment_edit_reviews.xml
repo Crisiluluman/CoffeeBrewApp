@@ -7,6 +7,18 @@
     android:background="#A27250"
     >
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit_delete_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#6F373C"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_delete"
+        app:backgroundTint="#6F373C"
+        app:layout_constraintBottom_toTopOf="@+id/edit_save_changes"
+        app:layout_constraintEnd_toEndOf="@+id/edit_save_changes"
+        app:layout_constraintStart_toStartOf="@+id/edit_save_changes" />
+
 
     <EditText
         android:id="@+id/edit_coffee_name"

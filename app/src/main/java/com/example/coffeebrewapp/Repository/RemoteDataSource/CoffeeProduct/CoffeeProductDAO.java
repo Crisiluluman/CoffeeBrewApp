@@ -210,4 +210,9 @@ public class CoffeeProductDAO {
 
         return userReviews;
     }
+
+    public void deleteCoffeProduct(String oldCoffeeName) {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
+        dbRef.child(oldCoffeeName).removeValue();
+    }
 }

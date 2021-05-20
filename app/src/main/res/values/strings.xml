@@ -10,7 +10,7 @@
     </string-array>
 
     <string name="facebook_application_id" translatable="false">4098365543587291</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">d71c2625b4491b75f158b1004f60315e</string>
+    <string name="fb_login_protocol_scheme" translatable="false">d71c2625b4491b75f158b1004f60315e</string>
 
 
 

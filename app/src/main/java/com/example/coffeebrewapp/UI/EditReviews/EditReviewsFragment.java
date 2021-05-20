@@ -56,6 +56,9 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
     private Uri newImageURI;
     private String oldCoffeeName;
 
+    FloatingActionButton deleteProduct;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,6 +77,15 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
         editRating = layout.findViewById(R.id.edit_rating_bar);
         editDescription = layout.findViewById(R.id.edit_coffee_description_edit);
         saveEdits = layout.findViewById(R.id.edit_save_changes);
+
+
+        //Delete coffee product
+        deleteProduct = layout.findViewById(R.id.edit_delete_product);
+        deleteProduct.setOnClickListener(v -> {
+            viewModel.deleteCoffeProduct(oldCoffeeName);
+            MainActivity.navController.navigate(R.id.nav_user_reviews);
+        });
+
 
         //Initializing spinner
         editBrew = layout.findViewById(R.id.edit_brew_spinner);
@@ -99,7 +111,7 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
                     dispatchTakePictureIntent();
                 });
 
-                Picasso.with(getContext()).load(product.getImageSource()).into(coffeeImage);
+                Picasso.get().load(product.getImageSource()).into(coffeeImage);
 
                 editRating.setRating(product.getRating());
 
@@ -199,7 +211,7 @@ public class EditReviewsFragment extends Fragment implements AdapterView.OnItemS
             case PICK_IMAGE_REQUEST:
                 try {
                     newImageURI = data.getData();
-                    Picasso.with(getActivity().getApplicationContext()).load(newImageURI).into(coffeeImage);
+                    Picasso.get().load(newImageURI).into(coffeeImage);
                 } catch (NullPointerException e) {
                     Toast.makeText(getContext(), "No image was selected", Toast.LENGTH_SHORT).show();
                 }

@@ -55,4 +55,11 @@ public class EditReviewsViewModel extends AndroidViewModel {
 
     }
 
+
+
+
+
+    public void deleteCoffeProduct(String oldCoffeeName) {
+        coffeeProductDAO.deleteCoffeProduct(oldCoffeeName);
+    }
 }

@@ -43,7 +43,7 @@ public class UserReviewsCoffeProductAdaper extends RecyclerView.Adapter<UserRevi
     @Override
     public void onBindViewHolder(@NonNull UserReviewsCoffeProductAdaper.ViewHolder holder, int position) {
         holder.userReviewsCoffeename.setText(coffeeProductList.get(position).getCoffeeName());
-        Picasso.with(context).load(coffeeProductList.get(position).getImageSource()).into(holder.userReviewsImage);
+        Picasso.get().load(coffeeProductList.get(position).getImageSource()).into(holder.userReviewsImage);
         holder.userReviewsRating.setRating(coffeeProductList.get(position).getRating());
         holder.userReviewsBrewmethod.setText(coffeeProductList.get(position).getBrewmethod());
     }

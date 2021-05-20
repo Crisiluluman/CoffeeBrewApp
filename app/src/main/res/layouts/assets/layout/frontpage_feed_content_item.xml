@@ -17,6 +17,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/frontpage_userImage"
+            android:src="@mipmap/ic_launcher_round"
             android:background="@drawable/image_border_round"
             android:layout_width="70dp"
             android:layout_height="70dp"

@@ -60,7 +60,7 @@ public class SearchSelectedCoffeeFragment extends Fragment {
 
                 coffeeName.setText(product.getCoffeeName());
                 coffeeRating.setRating(product.getRating());
-                Picasso.with(getContext()).load(product.getImageSource()).into(coffeeImage);
+                Picasso.get().load(product.getImageSource()).into(coffeeImage);
                 brewmethod(product.getBrewmethod());
                 coffeeDescription.setText(product.getDescription());
 

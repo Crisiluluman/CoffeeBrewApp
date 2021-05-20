@@ -50,7 +50,7 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
     public void onBindViewHolder(@NonNull CoffeeProductAdapter.ViewHolder holder, int position) {
 
         holder.coffeeProductName.setText(filteredList.get(position).getCoffeeName());
-        Picasso.with(context).load(filteredList.get(position).getImageSource()).into(holder.coffeeProductImage);
+        Picasso.get().load(filteredList.get(position).getImageSource()).into(holder.coffeeProductImage);
         holder.coffeeProductRating.setRating(filteredList.get(position).getRating());
         holder.coffeeProductBrewmethod.setText(filteredList.get(position).getBrewmethod());
 

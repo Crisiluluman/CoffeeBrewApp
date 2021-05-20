@@ -88,7 +88,7 @@ public class ProfilePageFragment extends Fragment {
                 public void onChanged(ProfileData profileData) {
 
                     try {
-                        Picasso.with(getContext()).load(profileData.getImageSource()).into(profileImage);
+                        Picasso.get().load(profileData.getImageSource()).into(profileImage);
                     } catch (Exception e) {
                         e.printStackTrace();
                         profileImage.setImageResource(R.mipmap.ic_launcher);
@@ -108,7 +108,7 @@ public class ProfilePageFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(profileImage);
+            Picasso.get().load(imageUri).into(profileImage);
         }
 
     }

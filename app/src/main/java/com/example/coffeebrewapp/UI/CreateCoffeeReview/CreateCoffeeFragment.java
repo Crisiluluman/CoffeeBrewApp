@@ -224,7 +224,7 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
             case PICK_IMAGE_REQUEST:
                 try {
                     imageUri = data.getData();
-                    Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(coffeeImage);
+                    Picasso.get().load(imageUri).into(coffeeImage);
                 } catch (NullPointerException e) {
                     Toast.makeText(getContext(), "No image was selected", Toast.LENGTH_SHORT).show();
                 }

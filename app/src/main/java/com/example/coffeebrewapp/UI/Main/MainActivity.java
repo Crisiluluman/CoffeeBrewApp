@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(ProfileData profileData) {
                 try {
-                    Picasso.with(MainActivity.header.getContext()).load(profileData.getImageSource()).into(profileImage);
+                    Picasso.get().load(profileData.getImageSource()).into(profileImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                     profileImage.setImageResource(R.mipmap.ic_launcher);
