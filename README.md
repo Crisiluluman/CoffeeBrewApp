@@ -48,10 +48,10 @@ ________________________________________________________________________________
 - https://www.youtube.com/watch?v=MfCiiTEwt3g&list=LL&index=11&t=7s							  <br>
 
 **CameraImage URL** <br>
--https://www.codeproject.com/Questions/741165/why-capture-image-path-return-null-in-android				  <br>
+- https://www.codeproject.com/Questions/741165/why-capture-image-path-return-null-in-android				  <br>
 
 **Retrieving data** <br>
--https://firebase.google.com/docs/database/admin/retrieve-data								  <br>
+- https://firebase.google.com/docs/database/admin/retrieve-data								  <br>
 
 
 
