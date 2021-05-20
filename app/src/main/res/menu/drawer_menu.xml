@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view"
     >
-
-    <!-- TODO: skift farve på icons? -->
-
+    
     <group android:checkableBehavior="single">
+       <!--
         <item
             android:id="@+id/nav_followed_people"
             android:icon="@drawable/ic_favorite"
             android:title="Liked people" />
+        -->
 
         <item
             android:id="@+id/nav_user_reviews"

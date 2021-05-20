@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         // Setting the drawer buttons to open other fragments
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_frontPage, R.id.nav_searchCoffee, R.id.nav_profile,
-                R.id.nav_user_reviews, R.id.nav_followed_people)
+                R.id.nav_user_reviews)
                 //    .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
