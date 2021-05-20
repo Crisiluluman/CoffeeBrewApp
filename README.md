@@ -14,7 +14,7 @@ ________________________________________________________________________________
 ## MoSCoW requirements ##
 
 **Must have** <br>
-- Profile page containing information and activity of the user (Not activity can be seen)                                                    <br>
+- Profile page containing information and activity of the user (You can change username and password, but you can overview and change your own reviews)  <br>
 - Search function for finding the specific product (Done)                                                                    <br>
 - Sharing functionality to share experiences among friends and family (Not done)                                             <br>
 - Rating system for users to rate the products (You can only give a rating to your own product)                                  <br>
