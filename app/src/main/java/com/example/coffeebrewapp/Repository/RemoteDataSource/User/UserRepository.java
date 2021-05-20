@@ -4,15 +4,12 @@ import android.app.Application;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
 import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
 import com.example.coffeebrewapp.Data.User.UserLiveData;
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
@@ -38,10 +34,7 @@ public class UserRepository {
     private DatabaseReference databaseAllCoffee;
     private StorageReference storageReference;
     private ProfileData temp;
-
-    private String imageURL;
-
-    private MutableLiveData<List<ProfileData>> allProfiles;
+    private MutableLiveData<ProfileData> liveProfilData;
 
     private UserRepository(Application app) {
         this.app = app;
@@ -52,11 +45,13 @@ public class UserRepository {
     public void init() {
         databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference("User_Images");
-
+        liveProfilData  = new MutableLiveData<>();
+        temp = new ProfileData();
     }
 
+
     public static synchronized UserRepository getInstance(Application app) {
-        if(instance == null)
+        if (instance == null)
             instance = new UserRepository(app);
         return instance;
     }
@@ -102,7 +97,28 @@ public class UserRepository {
     }
 */
 
+    public MutableLiveData<ProfileData> getCurrentUserProfileData() throws NullPointerException {
 
+        databaseAllCoffee.child(getCurrentUser().getValue().getDisplayName()).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                temp = snapshot.getValue(ProfileData.class);
+                liveProfilData.setValue(temp);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return liveProfilData;
+    }
+
+/*
     public ProfileData getCurrentUserProfileData()throws NullPointerException
     {
 
@@ -123,10 +139,11 @@ public class UserRepository {
         });
 
         return temp;
-    }
+    }*/
 
     public void uploadProfileImage(Uri imageUri, String uriExtension) {
 
+        //Current username
         String username = getCurrentUser().getValue().getDisplayName();
 
         StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ":" + uriExtension);
@@ -137,8 +154,8 @@ public class UserRepository {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        databaseAllCoffee.child(username).child("imageSource").setValue(uri.toString());
                         databaseAllCoffee.child(username).child("username").setValue(getCurrentUser().getValue().getDisplayName());
+                        databaseAllCoffee.child(username).child("imageSource").setValue(uri.toString());
 
                     }
                 });
@@ -146,4 +163,23 @@ public class UserRepository {
         });
 
     }
+
+ /*   public void uploadNewUsername(String newUsername) {
+
+        //Current username
+        String username = getCurrentUser().getValue().getDisplayName();
+
+        databaseAllCoffee.child(username).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                databaseAllCoffee.child(username).setValue(newUsername);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }*/
 }

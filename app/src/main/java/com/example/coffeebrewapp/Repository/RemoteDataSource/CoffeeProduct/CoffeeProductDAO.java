@@ -33,7 +33,6 @@ public class CoffeeProductDAO {
     private StorageReference storageReference;
 
     private MutableLiveData<List<CoffeeProduct>> allCoffees;
-    private MutableLiveData<CoffeeProduct> liveCoffeeProduct;
 
 
     private CoffeeProductDAO()
@@ -52,7 +51,6 @@ public class CoffeeProductDAO {
         databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
 
         storageReference = FirebaseStorage.getInstance().getReference("CoffeeProducts_Images");
-        //coffeeProductLiveData = new CoffeeProductLiveData(databaseReference);
         allCoffees = new MutableLiveData<>(new ArrayList<>());
 
     }
@@ -174,6 +172,7 @@ public class CoffeeProductDAO {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+
                         databaseAllCoffee.child(sCoffeeName).child("imageSource").setValue(uri.toString());
                         databaseAllCoffee.child(sCoffeeName).child("coffeeName").setValue(sCoffeeName);
                     }

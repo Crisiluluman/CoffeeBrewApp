@@ -32,7 +32,7 @@ public class SearchSelectedCoffeeFragment extends Fragment {
     ImageView coffeeBrewIcon;
     TextView coffeeDescription;
     RatingBar coffeeRate;
-
+    TextView ratingNumberDisplay;
 
 
 
@@ -49,7 +49,7 @@ public class SearchSelectedCoffeeFragment extends Fragment {
         coffeeRating = layout.findViewById(R.id.select_coffee_rating);
         coffeeBrewIcon = layout.findViewById(R.id.select_coffee_icon);
         coffeeDescription = layout.findViewById(R.id.select_coffee_description);
-
+        ratingNumberDisplay = layout.findViewById(R.id.rating_display_number);
 
         CoffeeProduct product = viewModel.getProductFromName(viewModel.getCoffeeFromSearch());
         coffeeName.setText(product.getCoffeeName());
@@ -58,6 +58,8 @@ public class SearchSelectedCoffeeFragment extends Fragment {
         brewmethod(product.getBrewmethod());
         coffeeDescription.setText(product.getDescription());
 
+        String ratingDisplay = Float.toString(product.getRating());
+        ratingNumberDisplay.setText(ratingDisplay);
 
         coffeeRate = layout.findViewById(R.id.select_coffee_rate);
         coffeeRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

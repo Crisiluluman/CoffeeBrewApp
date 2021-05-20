@@ -5,9 +5,12 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
 import com.example.coffeebrewapp.Repository.RemoteDataSource.User.UserRepository;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfilePageViewModel extends AndroidViewModel {
 
@@ -26,7 +29,16 @@ public class ProfilePageViewModel extends AndroidViewModel {
         userRepository.uploadProfileImage(imageUri, uriExtension);
     }
 
-    public ProfileData getCurrentProfileData(){
+    public void uploadNewUsername(String newUsername) {
+        //userRepository.uploadNewUsername(newUsername);
+    }
+
+    public LiveData<FirebaseUser> getCurrentUser() {
+        return userRepository.getCurrentUser();
+    }
+
+
+    public MutableLiveData<ProfileData> getCurrentProfileData(){
         try {
             return userRepository.getCurrentUserProfileData();
         } catch (NullPointerException e) {

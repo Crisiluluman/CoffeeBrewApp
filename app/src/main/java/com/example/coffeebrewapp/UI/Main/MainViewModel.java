@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
 import com.example.coffeebrewapp.Repository.RemoteDataSource.User.UserRepository;
@@ -37,7 +38,7 @@ public class MainViewModel extends AndroidViewModel {
         return userRepository.getCurrentUser();
     }
 
-    public ProfileData getCurrentProfileData() throws NullPointerException{
+    public MutableLiveData<ProfileData> getCurrentProfileData() throws NullPointerException{
         return userRepository.getCurrentUserProfileData();
 
     }

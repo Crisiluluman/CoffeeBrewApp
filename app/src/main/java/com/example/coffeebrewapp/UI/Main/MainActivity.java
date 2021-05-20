@@ -1,10 +1,10 @@
 package com.example.coffeebrewapp.UI.Main;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -13,20 +13,17 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
 import com.example.coffeebrewapp.R;
 import com.example.coffeebrewapp.UI.Login.LoginActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
+/*
         try {
             CircleImageView profileImage = header.findViewById(R.id.nav_profile_image);
             Picasso.with(this).load(viewModel.getCurrentProfileData().getImageURL()).into(profileImage);
@@ -95,9 +92,27 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
            // Toast.makeText(this, "Select a profile picture", Toast.LENGTH_SHORT).show();
         }
+*/
+
+        CircleImageView profileImage = MainActivity.header.findViewById(R.id.nav_profile_image);
+
+        final Observer<ProfileData> dataObserved = new Observer<ProfileData>() {
+            @Override
+            public void onChanged(ProfileData profileData) {
+
+                try {
+                    Picasso.with(MainActivity.header.getContext()).load(profileData.getImageSource()).into(profileImage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    profileImage.setImageResource(R.mipmap.ic_launcher);
+                    Toast.makeText(navigationView.getContext(), "Try checking out your profile picture", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        viewModel.getCurrentProfileData().observe(this, dataObserved);
+
 
     }
-
 
 
     private void checkIfSignedIn() {
@@ -105,10 +120,11 @@ public class MainActivity extends AppCompatActivity {
             if (user != null) {
                 String firebaseUsername = viewModel.getCurrentUser().getValue().getDisplayName();
                 usernameTextview.setText(firebaseUsername);
-                Toast.makeText(this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             } else
                 startLoginActivity();
         });
+
+
     }
 
     private void startLoginActivity() {

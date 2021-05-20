@@ -43,7 +43,7 @@ public class CreateCoffeeViewModel  extends AndroidViewModel {
 
     public void uploadObjectToFirebase(String sCoffeeName, float rating, String brew, String description)
     {
-        String userID = getCurrentUser().getValue().getUid();
+        String userID = getCurrentUser().getValue().getDisplayName();
         coffeeProductDAO.uploadObjectToFirebase(userID,sCoffeeName,rating,brew,description);
 
     }

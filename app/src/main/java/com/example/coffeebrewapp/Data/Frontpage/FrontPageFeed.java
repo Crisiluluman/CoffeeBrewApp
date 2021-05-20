@@ -1,5 +1,7 @@
 package com.example.coffeebrewapp.Data.Frontpage;
 
+import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
+
 public class FrontPageFeed {
 
     // The individual feed on the frontpage
@@ -17,80 +19,11 @@ public class FrontPageFeed {
      Coffee Icon <-- Which brew method did the user use
     */
 
-    private int ID;
-    private int userID;
-    private int userImage;
+    private String URL;
     private String username;
-    private int followerIcon;
-    private int shareIcon;
-    private int mapsIcon;
-    private int coffeeRating;
-    private String coffeeName;
+    private CoffeeProduct coffeeProduct;
     private int feedRating;
-    private int coffeeImage;
-    private String brewIcon;
 
-    /*
-    public FrontPageFeed(int ID, int userID, int userImage, String username, int followerIcon, int shareIcon, int mapsIcon, int coffeeRating, String coffeeName, int feedRating, int coffeeImage, int brewIcon) {
-        this.ID = ID;
-        this.userID = userID;
-        this.userImage = userImage;
-        this.username = username;
-        this.followerIcon = followerIcon;
-        this.shareIcon = shareIcon;
-        this.mapsIcon = mapsIcon;
-        this.coffeeRating = coffeeRating;
-        this.coffeeName = coffeeName;
-        this.feedRating = feedRating;
-        this.coffeeImage = coffeeImage;
-        this.brewIcon = brewIcon;
-    }
-    */
-
-
-    public FrontPageFeed(int ID, int userID, int userImage, String username, int coffeeRating, String coffeeName, int feedRating, int coffeeImage, String brewIcon) {
-        this.ID = ID;
-        this.userID = userID;
-        this.userImage = userImage;
-        this.username = username;
-        this.coffeeRating = coffeeRating;
-        this.coffeeName = coffeeName;
-        this.feedRating = feedRating;
-        this.coffeeImage = coffeeImage;
-        this.brewIcon = brewIcon;
-    }
-
-    public String getCoffeeName() {
-        return coffeeName;
-    }
-
-    public void setCoffeeName(String coffeeName) {
-        this.coffeeName = coffeeName;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public int getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(int userImage) {
-        this.userImage = userImage;
-    }
 
     public String getUsername() {
         return username;
@@ -100,36 +33,13 @@ public class FrontPageFeed {
         this.username = username;
     }
 
-    public int getFollowerIcon() {
-        return followerIcon;
+    public FrontPageFeed() {
     }
 
-    public void setFollowerIcon(int followerIcon) {
-        this.followerIcon = followerIcon;
-    }
+    public FrontPageFeed(CoffeeProduct coffeeProduct, String URL) {
+        this.URL = URL;
+        this.coffeeProduct = coffeeProduct;
 
-    public int getShareIcon() {
-        return shareIcon;
-    }
-
-    public void setShareIcon(int shareIcon) {
-        this.shareIcon = shareIcon;
-    }
-
-    public int getMapsIcon() {
-        return mapsIcon;
-    }
-
-    public void setMapsIcon(int mapsIcon) {
-        this.mapsIcon = mapsIcon;
-    }
-
-    public int getCoffeeRating() {
-        return coffeeRating;
-    }
-
-    public void setCoffeeRating(int coffeeRating) {
-        this.coffeeRating = coffeeRating;
     }
 
     public int getFeedRating() {
@@ -140,19 +50,20 @@ public class FrontPageFeed {
         this.feedRating = feedRating;
     }
 
-    public int getCoffeeImage() {
-        return coffeeImage;
+    public String getURL() {
+        return URL;
     }
 
-    public void setCoffeeImage(int coffeeImage) {
-        this.coffeeImage = coffeeImage;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
-    public String getBrewIcon() {
-        return brewIcon;
+    public CoffeeProduct getCoffeeProduct() {
+        return coffeeProduct;
     }
 
-    public void setBrewIcon(String brewIcon) {
-        this.brewIcon = brewIcon;
+    public void setCoffeeProduct(CoffeeProduct coffeeProduct) {
+        this.coffeeProduct = coffeeProduct;
     }
 }
+

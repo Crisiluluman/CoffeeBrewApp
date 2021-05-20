@@ -114,5 +114,7 @@ public class SearchCoffeeFragment extends Fragment implements CoffeeProductAdapt
         MainActivity.navController.navigate(R.id.nav_search_selected_coffee);
     }
 
+    public void filterBook(CharSequence s){
 
+    }
 }

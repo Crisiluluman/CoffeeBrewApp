@@ -10,7 +10,6 @@ public class CoffeeProduct {
     private String brewmethod;
     private String description;
 
-    //TODO: How to handle unique ID? Everytime a product is created, it should have a unique ID
     public CoffeeProduct(String userId, String coffeeName, float rating, String brewmethod, String description) {
         if (coffeeName.trim().equals(""))
         {
@@ -27,16 +26,6 @@ public class CoffeeProduct {
         //Empty constructor needed
     }
 
-    //TODO: Delete after figuring out Firebase
-    private int ID;
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public String getUserId() {
         return userId;

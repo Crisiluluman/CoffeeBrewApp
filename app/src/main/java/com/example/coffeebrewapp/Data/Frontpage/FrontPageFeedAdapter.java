@@ -1,5 +1,6 @@
 package com.example.coffeebrewapp.Data.Frontpage;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +12,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
 import com.example.coffeebrewapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdapter.ViewHolder>{
+public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdapter.ViewHolder> {
 
     private List<FrontPageFeed> frontPageFeedList;
     private FrontPageFeedAdapter.OnListItemClickListener listener;
-
+    private Context context;
 
     private int clickedVote = 0;
     private ImageView thumbsUp;
     private ImageView thumbsDown;
 
 
-    public FrontPageFeedAdapter(List<FrontPageFeed> frontPageFeedList, FrontPageFeedAdapter.OnListItemClickListener listener) {
-        this.frontPageFeedList = frontPageFeedList;
+    public FrontPageFeedAdapter(Context context, FrontPageFeedAdapter.OnListItemClickListener listener) {
+        this.context = context;
         this.listener = listener;
     }
 
@@ -36,8 +39,7 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
     @Override
     public FrontPageFeedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.frontpage_content_item, parent, false);
-
+        View view = inflater.inflate(R.layout.frontpage_feed_content_item, parent, false);
 
 
         //Thumbs down code
@@ -51,7 +53,7 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
         //TODO: Fix buttons so they can only be pressed once (switch)
         thumbsDown.setOnClickListener(v -> {
             int temp = frontPageFeedList.get(clickedVote).getFeedRating();
-            frontPageFeedList.get(clickedVote).setFeedRating(temp-1);
+            frontPageFeedList.get(clickedVote).setFeedRating(temp - 1);
 
             Toast.makeText(view.getContext(), "You have downvoted", Toast.LENGTH_SHORT).show();
             System.out.println("\t DownVote " + frontPageFeedList.get(clickedVote).getFeedRating());
@@ -60,39 +62,37 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
 
         thumbsUp.setOnClickListener(v -> {
             int temp = frontPageFeedList.get(clickedVote).getFeedRating();
-            frontPageFeedList.get(clickedVote).setFeedRating(temp+1);
+            frontPageFeedList.get(clickedVote).setFeedRating(temp + 1);
 
             Toast.makeText(view.getContext(), "You have upvoted", Toast.LENGTH_SHORT).show();
             notifyDataSetChanged();
         });
 
 
-
-        return new FrontPageFeedAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
-
-
 
 
     @Override
     public void onBindViewHolder(@NonNull FrontPageFeedAdapter.ViewHolder holder, int position) {
-        holder.userImage.setImageResource(frontPageFeedList.get(position).getUserImage());
-        holder.username.setText(frontPageFeedList.get(position).getUsername());
+        //Icons
         holder.followerIcon.setImageResource(R.drawable.ic_favorite);
         holder.shareIcon.setImageResource(R.drawable.ic_share);
         holder.mapsIcon.setImageResource(R.drawable.ic_maps);
-        holder.coffeeName.setText(frontPageFeedList.get(position).getCoffeeName());
-        holder.coffeeRating.setRating(frontPageFeedList.get(position).getCoffeeRating());
+
+        //Data
+        Picasso.with(context).load(frontPageFeedList.get(position).getURL()).into(holder.userImage);
+        holder.username.setText(frontPageFeedList.get(position).getCoffeeProduct().getUserId());
+
+        holder.coffeeName.setText(frontPageFeedList.get(position).getCoffeeProduct().getCoffeeName());
+        holder.coffeeRating.setRating(frontPageFeedList.get(position).getCoffeeProduct().getRating());
         holder.thumbsUp.setImageResource(R.drawable.ic_thumb_up);
 
-        //TODO: Double check setImageResource for uploading images
-        holder.coffeeImage.setImageResource(frontPageFeedList.get(position).getCoffeeImage());
-
+        Picasso.with(context).load(frontPageFeedList.get(position).getCoffeeProduct().getImageSource()).into(holder.coffeeImage);
 
 
         // Sets icon depending on brew method
-        switch (frontPageFeedList.get(position).getBrewIcon())
-        {
+        switch (frontPageFeedList.get(position).getCoffeeProduct().getBrewmethod()) {
             case "Stempel":
                 holder.brewmethodIcon.setImageResource(R.drawable.ic_stempel);
                 break;
@@ -113,9 +113,28 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
     @Override
     public int getItemCount() {
         return frontPageFeedList.size();
+
     }
 
+    public void updatedList(List<FrontPageFeed> frontPageFeeds) {
 
+        //TEsting stuff
+/*
+        try {
+            CoffeeProduct product = new CoffeeProduct("String userId", "String coffeeName", 4, "String brewmethod", "String description");
+            FrontPageFeed testFeed = new FrontPageFeed(product,null);
+            frontPageFeedList.add(testFeed);
+            System.out.println(testFeed.getURL());
+
+            frontPageFeedList = frontPageFeeds;
+            notifyDataSetChanged();
+        } catch (NullPointerException e) {
+            Toast.makeText(context, "THE BIG NULL", Toast.LENGTH_SHORT).show();
+        }
+*/
+        frontPageFeedList = frontPageFeeds;
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -127,7 +146,7 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
         TextView coffeeName;
         RatingBar coffeeRating;
 
-       // ImageView thumbsDown;
+        // ImageView thumbsDown;
 
         ImageView thumbsUp;
         ImageView brewmethodIcon;
@@ -164,15 +183,13 @@ public class FrontPageFeedAdapter extends RecyclerView.Adapter<FrontPageFeedAdap
     }
 
 
-    public interface OnListItemClickListener
-    {
+    public interface OnListItemClickListener {
         int onClick(int position);
     }
 
 
     //TODO: Implement sort func for when stuff is upvoted
-    public void orderedList(ArrayList<FrontPageFeed> orderedList)
-    {
+    public void orderedList(ArrayList<FrontPageFeed> orderedList) {
         frontPageFeedList = orderedList;
         notifyDataSetChanged();
     }

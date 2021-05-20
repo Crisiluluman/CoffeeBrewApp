@@ -3,12 +3,8 @@ package com.example.coffeebrewapp.Data.ProfileData;
 public class ProfileData {
 
     private String username;
-    private String imageURL;
+    private String imageSource;
 
-    public ProfileData(String imageURL, String username) {
-        this.username = username;
-        this.imageURL = imageURL;
-    }
 
     public ProfileData() {
 
@@ -22,11 +18,11 @@ public class ProfileData {
         this.username = username;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageSource() {
+        return imageSource;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageSource(String imageURL) {
+        this.imageSource = imageURL;
     }
 }

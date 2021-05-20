@@ -40,7 +40,7 @@
         android:id="@+id/nav_profile"
         android:name="com.example.coffeebrewapp.UI.ProfilePage.ProfilePageFragment"
         android:label="Profile Page"
-        tools:layout="@layout/profile_page_fragment"
+        tools:layout="@layout/fragment_profile_page"
 
     />
 

@@ -19,6 +19,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="roundedCornersSmall" parent="">
+        <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="roundedCornersBig" parent="">
+        <item name="cornerSize">20dp</item>
+    </style>
+
     <style name="Theme.CoffeeBrewApp..AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CoffeeBrewApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

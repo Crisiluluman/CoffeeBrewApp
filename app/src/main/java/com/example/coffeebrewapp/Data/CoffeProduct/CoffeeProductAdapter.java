@@ -101,12 +101,14 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
         return filteredList.get(position);
     }
 
+
+
+
     //Method for filtering
-    //TODO: Not working quite right
+    //TODO: Not working quite right fix it
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
-            //For some reason if the CoffeeName has numbers in it, it makes this method react kinda weirdly... It only works on String/ CharSequences
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
