@@ -11,10 +11,6 @@ The app will provide a user friendly environment for all ages to be able to shar
 For APIs the initial thought is that of Google maps, in order for users to check in where they bought the product, as well a potential API concerning the coffee products, so as to have these registered somewhere. 
 
 ____________________________________________________________________________________________
-## IMPORTANT INFORMATION ##
-When opening the project in Android Studio, try changing the view from "Android" to "Project". <br>
-That will enable you to get a much better overview regarding the, many, different XML files.
-____________________________________________________________________________________________
 ## MoSCoW requirements ##
 
 **Must have** <br>
@@ -36,9 +32,27 @@ ________________________________________________________________________________
 
 <br>
 
-**Won’t have** <br>
+**Won’t have** <br><br>
+
+____________________________________________________________________________________________
+## References ##
+
+**ShapeAbleImageView** <br>
+- https://howtodoandroid.com/shapeableimageview-material-components-android/						  <br>
+
+**FilterAble recyclerView** <br>
+- https://stackoverflow.com/questions/24769257/custom-listview-adapter-with-filter-android				  <br>
 
 
-  
+**Firebase storage (Until video 4)** <br>
+- https://www.youtube.com/watch?v=MfCiiTEwt3g&list=LL&index=11&t=7s							  <br>
+
+**CameraImage URL** <br>
+-https://www.codeproject.com/Questions/741165/why-capture-image-path-return-null-in-android				  <br>
+
+**Retrieving data** <br>
+-https://firebase.google.com/docs/database/admin/retrieve-data								  <br>
+
+
 
 
