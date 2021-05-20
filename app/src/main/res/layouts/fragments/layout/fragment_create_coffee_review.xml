@@ -21,7 +21,7 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/text_input_border"
         android:hint="Enter coffee name"
-        android:paddingLeft="10dp"
+        android:padding="10dp"
         android:maxLength="15"
         android:textColor="#000000"
         android:textSize="17dp"

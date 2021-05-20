@@ -43,6 +43,7 @@ public class UserReviewsFragment extends Fragment implements UserReviewsCoffePro
 
         try {
             viewModel.getUserReviews().observe(getViewLifecycleOwner(),reviewsAdapter::updatedList);
+            System.out.println("THE SIZE OF MY RUBIX " + viewModel.getUserReviews().getValue().size());
         } catch (NullPointerException e) {
             Toast.makeText(getContext(), "You have no reviews, go make some! :)", Toast.LENGTH_SHORT).show();
         }

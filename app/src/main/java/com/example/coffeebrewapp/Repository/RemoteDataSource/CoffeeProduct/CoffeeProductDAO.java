@@ -48,7 +48,7 @@ public class CoffeeProductDAO {
     }
 
 
-    public void init(String userId) {
+    public void init() {
         databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
 
         storageReference = FirebaseStorage.getInstance().getReference("CoffeeProducts_Images");
@@ -182,11 +182,12 @@ public class CoffeeProductDAO {
     }
 
 
-    public void uploadImageToFirebase(Uri tempUri, String uriExtension, String sCoffeeName)
+    public void uploadImageToFirebase(Uri tempUri, String uriExtension, String sCoffeeName, String oldCoffeName)
     {
 
         //Maybe add some error handling if no image is selected
         StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ":" + uriExtension);
+
 
         fileReference.putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -206,8 +207,16 @@ public class CoffeeProductDAO {
                     @Override
                     public void onSuccess(Uri uri) {
 
-                        databaseAllCoffee.child(sCoffeeName).child("imageSource").setValue(uri.toString());
-                        databaseAllCoffee.child(sCoffeeName).child("coffeeName").setValue(sCoffeeName);
+                        if (oldCoffeName.equals(sCoffeeName))
+                        {
+                            databaseAllCoffee.child(sCoffeeName).child("imageSource").setValue(uri.toString());
+                            databaseAllCoffee.child(sCoffeeName).child("coffeeName").setValue(sCoffeeName);
+                        }
+                        else {
+                            databaseAllCoffee.child(oldCoffeName).setValue(sCoffeeName); //This should change the name of the child product, but duplicates the data instead
+                            databaseAllCoffee.child(oldCoffeName).child("imageSource").setValue(uri.toString());
+                            databaseAllCoffee.child(oldCoffeName).child("coffeeName").setValue(sCoffeeName);
+                        }
                     }
                 });
 
@@ -225,10 +234,34 @@ public class CoffeeProductDAO {
         });
     }
 
-    public void uploadObjectToFirebase(String userID, String sCoffeeName, float rating, String brew, String description)
+    public void uploadObjectToFirebase(String userID, String sCoffeeName, float rating, String brew, String description, String oldCoffeName)
     {
         CoffeeProduct productToBeUploaded = new CoffeeProduct(userID,sCoffeeName,rating,brew,description);
-        databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
+        //databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
+
+        if (oldCoffeName.equals(sCoffeeName)){
+            databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
+        }
+
+        else {
+        databaseAllCoffee.child(oldCoffeName).setValue(sCoffeeName);
+        databaseAllCoffee.child(oldCoffeName).child("coffeeName").setValue(sCoffeeName);
+        databaseAllCoffee.child(oldCoffeName).child("brewMethod").setValue(brew);
+        databaseAllCoffee.child(oldCoffeName).child("description").setValue(description);
+        databaseAllCoffee.child(oldCoffeName).child("userId").setValue(userID);
+        databaseAllCoffee.child(oldCoffeName).child("rating").setValue(rating);
+        }
+        /*if (databaseAllCoffee.child(s).equals(sCoffeeName))
+        {
+            databaseAllCoffee.child(sCoffeeName).setValue(sCoffeeName);
+            databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
+        }
+        else
+            {
+
+
+
+            }*/
 
     }
 

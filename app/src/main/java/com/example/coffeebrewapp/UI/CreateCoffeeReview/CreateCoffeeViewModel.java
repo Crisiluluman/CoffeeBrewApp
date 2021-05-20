@@ -36,21 +36,21 @@ public class CreateCoffeeViewModel  extends AndroidViewModel {
         return userRepository.getCurrentUser();
     }
 
-    public void uploadToFirebase(Uri tempUri, String uriExtension,String sCoffeeName)
+    public void uploadToFirebase(Uri tempUri, String uriExtension,String sCoffeeName, String oldCoffeeName)
     {
-        coffeeProductDAO.uploadImageToFirebase(tempUri, uriExtension, sCoffeeName);
+        coffeeProductDAO.uploadImageToFirebase(tempUri, uriExtension, sCoffeeName, oldCoffeeName);
     }
 
-    public void uploadObjectToFirebase(String sCoffeeName, float rating, String brew, String description)
+    public void uploadObjectToFirebase(String sCoffeeName, float rating, String brew, String description, String oldCoffeeName)
     {
         String userID = getCurrentUser().getValue().getDisplayName();
-        coffeeProductDAO.uploadObjectToFirebase(userID,sCoffeeName,rating,brew,description);
+        coffeeProductDAO.uploadObjectToFirebase(userID,sCoffeeName,rating,brew,description,oldCoffeeName);
 
     }
 
 
     public void init() {
         String userId = getCurrentUser().getValue().getUid();
-        coffeeProductDAO.init(userId);
+        coffeeProductDAO.init();
     }
 }

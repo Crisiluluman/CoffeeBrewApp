@@ -7,13 +7,189 @@
     android:background="#A27250"
     >
 
-    <TextView
+
+
+
+    <!--TODO: DELETE IMAGE, this is just for testing -->
+    <EditText
         android:id="@+id/edit_coffee_name"
+        android:focusable="false"
+        android:layout_width="155dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/text_input_border"
+        android:hint="Enter coffee name"
+        android:padding="10dp"
+        android:maxLength="15"
+        android:textColor="#000000"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/edit_image_gallary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="File"
+        app:backgroundTint="#4D3626"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_coffee_name"
+        app:layout_constraintEnd_toEndOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintHorizontal_bias="0.267"
+        app:layout_constraintStart_toEndOf="@+id/edit_coffee_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/edit_image_camera"
+        android:layout_width="48dp"
+        android:layout_height="39dp"
+        android:src="@drawable/ic_select_camera"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_image_gallary"
+        app:layout_constraintEnd_toEndOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/edit_image_gallary"
+        app:layout_constraintTop_toTopOf="@+id/edit_image_gallary"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <ImageView
+        android:id="@+id/edit_coffee_image_provided"
+        android:layout_width="329dp"
+        android:layout_height="287dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edit_rating_title"
+        app:layout_constraintTop_toBottomOf="@+id/edit_coffee_name"
+        app:layout_constraintVertical_bias="0.562"
+        />
+
+
+    <!-- TODO: Optimally add custom coffee icons -->
+    <!-- Also, why does the bar not full out entire space? scale maybe? -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit_save_changes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_tick_yes"
+        app:backgroundTint="#6F373C"
+        app:backgroundTintMode="src_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/edit_coffee_description_edit" />
+
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:id="@+id/edit_progress_bar"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rating_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintStart_toStartOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintTop_toBottomOf="@+id/edit_coffee_image_provided" />
+
+    <!-- TODO: Fix colors -->
+
+    <TextView
+        android:id="@+id/edit_rating_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Rate coffee"
+        android:textColor="#D5B7A1"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edit_rating_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/edit_brew_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_coffee_description_edit"
+        app:layout_constraintStart_toEndOf="@+id/edit_rating_bar"
+        app:layout_constraintTop_toBottomOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintVertical_bias="0.305" />
+
+    <RatingBar
+        android:id="@+id/edit_rating_bar"
+        style="?android:attr/ratingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="24dp"
+        android:max="5"
+        android:numStars="5"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/coffee_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_coffee_image_provided"
+        app:layout_constraintVertical_bias="0.777" />
+
+    <TextView
+        android:id="@+id/edit_coffee_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Describe the coffee"
+        android:textColor="#D5B7A1"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edit_coffee_description_edit"
+        app:layout_constraintStart_toStartOf="@+id/edit_coffee_description_edit" />
+
+
+    <TextView
+        android:id="@+id/edit_brew_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Brew method"
+        android:textColor="#D5B7A1"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edit_brew_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toEndOf="@+id/edit_rating_title"
+        app:layout_constraintTop_toTopOf="@+id/edit_rating_title" />
+
+    <EditText
+        android:id="@+id/edit_coffee_description_edit"
+        android:layout_width="292dp"
+        android:layout_height="143dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="16dp"
+        android:gravity="start"
+        android:background="@drawable/text_input_border"
+        android:hint="Describe the coffee"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingRight="5dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

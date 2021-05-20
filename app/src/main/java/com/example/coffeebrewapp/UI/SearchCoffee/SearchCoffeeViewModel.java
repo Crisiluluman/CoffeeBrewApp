@@ -44,7 +44,7 @@ public class SearchCoffeeViewModel extends AndroidViewModel {
 
     public void init() {
         String userId = getCurrentUser().getValue().getUid();
-        coffeeProductDAO.init(userId);
+        coffeeProductDAO.init();
     }
 
 

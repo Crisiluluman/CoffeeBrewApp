@@ -48,7 +48,7 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
     private CoffeeProduct productToBeCreated;
     private CreateCoffeeViewModel viewModel;
 
-    //Camera stuff
+    //Image stuff
     static final int REQUEST_IMAGE_CAPTURE = 2; // For taking photos
     static final int PICK_IMAGE_REQUEST = 1;    // For picking a photo from gallery
 
@@ -154,8 +154,8 @@ public class CreateCoffeeFragment extends Fragment implements AdapterView.OnItem
                 String brew = brewMethod;
                 String description = coffeeDescription.getText().toString();
 
-                viewModel.uploadToFirebase(imageUri, uriExtension, sCoffeeName);
-                viewModel.uploadObjectToFirebase(sCoffeeName ,rating, brew, description);
+                viewModel.uploadToFirebase(imageUri, uriExtension, sCoffeeName, sCoffeeName); //This makes it so that you can change products when creating..
+                viewModel.uploadObjectToFirebase(sCoffeeName ,rating, brew, description, sCoffeeName);
 
                 //Navigates to list of coffees
                 MainActivity.navController.navigate(R.id.nav_searchCoffee);
