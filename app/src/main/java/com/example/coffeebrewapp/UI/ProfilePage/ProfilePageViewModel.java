@@ -9,16 +9,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
+import com.example.coffeebrewapp.Repository.RemoteDataSource.CoffeeProduct.CoffeeProductDAO;
 import com.example.coffeebrewapp.Repository.RemoteDataSource.User.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfilePageViewModel extends AndroidViewModel {
 
     private final UserRepository userRepository;
+    private final CoffeeProductDAO coffeeProductDAO;
 
     public ProfilePageViewModel(@NonNull Application app) {
         super(app);
         userRepository = UserRepository.getInstance(app);
+        coffeeProductDAO = CoffeeProductDAO.getInstance();
     }
 
     public void init(){
@@ -45,5 +48,11 @@ public class ProfilePageViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+
+    public void changeUsername(String newUsername) {
+        userRepository.changeUsername(newUsername);
     }
 }

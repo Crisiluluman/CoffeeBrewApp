@@ -9,8 +9,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.CoffeProduct.CoffeeProduct;
+import com.example.coffeebrewapp.Repository.RemoteDataSource.User.UserRepository;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,7 @@ public class CoffeeProductDAO {
 
 
     private static CoffeeProductDAO instance;
+    private UserRepository userRepository;
 
     private DatabaseReference databaseAllCoffee;
     private StorageReference storageReference;
@@ -195,8 +199,16 @@ public class CoffeeProductDAO {
     public void uploadObjectToFirebase(String userID, String sCoffeeName, float rating, String brew, String description)
     {
         CoffeeProduct productToBeUploaded = new CoffeeProduct(userID,sCoffeeName,rating,brew,description);
-        databaseAllCoffee.child(sCoffeeName).setValue(productToBeUploaded);
+        databaseAllCoffee.child(userID).setValue(productToBeUploaded);
 
     }
 
+    /*
+    public void updateUsername(String newUsername)
+    {
+        System.out.println("HEEEEEEE" + userRepository.getCurrentUser().getValue().getDisplayName());
+        databaseAllCoffee.child(userRepository.getCurrentUser().getValue().getDisplayName()).child("username").setValue(newUsername);
+
+    }
+    */
 }

@@ -55,15 +55,25 @@ public class ProfilePageFragment extends Fragment {
         acceptChanges = layout.findViewById(R.id.floating_change_information_button);
         acceptChanges.setOnClickListener(v -> {
 
-
-            try {
-                String uriExtension = getFileExtension(imageUri);
-                viewModel.uploadProfileImage(imageUri, uriExtension);
+            if (!usernameInput.getText().toString().equals(viewModel.getCurrentUser().getValue().getDisplayName()))
+            {
                 Toast.makeText(getContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
-
-            } catch (NullPointerException e) {
-                Toast.makeText(getContext(), "No changes were made", Toast.LENGTH_SHORT).show();
+                System.out.println("AMIGO");
+                viewModel.changeUsername(usernameInput.getText().toString());
             }
+            else {
+
+                try {
+                    String uriExtension = getFileExtension(imageUri); //Nullpointer here if the user hasnt changed image
+                    viewModel.uploadProfileImage(imageUri, uriExtension);
+                    Toast.makeText(getContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
+
+                } catch (NullPointerException e) {
+                    Toast.makeText(getContext(), "No changes were made", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
 
         });
 

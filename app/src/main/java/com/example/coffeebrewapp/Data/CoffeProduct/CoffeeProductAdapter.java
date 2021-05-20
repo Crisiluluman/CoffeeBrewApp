@@ -34,6 +34,8 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
     public CoffeeProductAdapter(OnListItemClickListener listener, Context context) {
         this.listener = listener;
         this.context = context;
+        coffeeProductList = new ArrayList<>();
+        filteredList = new ArrayList<>();
     }
 
 
@@ -47,10 +49,11 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
 
     @Override
     public void onBindViewHolder(@NonNull CoffeeProductAdapter.ViewHolder holder, int position) {
-        holder.coffeeProductName.setText(coffeeProductList.get(position).getCoffeeName());
-        Picasso.with(context).load(coffeeProductList.get(position).getImageSource()).into(holder.coffeeProductImage);
-        holder.coffeeProductRating.setRating(coffeeProductList.get(position).getRating());
-        holder.coffeeProductBrewmethod.setText(coffeeProductList.get(position).getBrewmethod());
+
+        holder.coffeeProductName.setText(filteredList.get(position).getCoffeeName());
+        Picasso.with(context).load(filteredList.get(position).getImageSource()).into(holder.coffeeProductImage);
+        holder.coffeeProductRating.setRating(filteredList.get(position).getRating());
+        holder.coffeeProductBrewmethod.setText(filteredList.get(position).getBrewmethod());
 
     }
 
@@ -112,30 +115,30 @@ public class CoffeeProductAdapter extends RecyclerView.Adapter<CoffeeProductAdap
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
-                FilterResults filterResults = new FilterResults();
-                String searchStr = constraint.toString();
+                List<CoffeeProduct> filtered = new ArrayList<>();
+                String filterPattern = constraint.toString().toLowerCase();
 
                 if (constraint == null || constraint.length() == 0) {
-                    filterResults.count = coffeeProductList.size();
-                    filterResults.values = coffeeProductList;
-
+                    filtered.addAll(coffeeProductList);
                 } else {
-                    final List<CoffeeProduct> resultsModel = new ArrayList<>();
 
                     for (CoffeeProduct product : coffeeProductList) {
-                        if (product.getCoffeeName().toLowerCase().contains(searchStr)) {
-                            resultsModel.add(product);
+                        if (product.getCoffeeName().toLowerCase().contains(constraint)) {
+                            System.out.println(product.getCoffeeName().toLowerCase());
+                            System.out.println(filterPattern);
+                            filtered.add(product);
                         }
-                        filterResults.count = resultsModel.size();
-                        filterResults.values = resultsModel;
                     }
                 }
-                return filterResults;
+                FilterResults results = new FilterResults();
+                results.values = filtered;
+
+                return results;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (List<CoffeeProduct>) results.values;
+                filteredList = (ArrayList<CoffeeProduct>) results.values;
                 notifyDataSetChanged();
             }
         };

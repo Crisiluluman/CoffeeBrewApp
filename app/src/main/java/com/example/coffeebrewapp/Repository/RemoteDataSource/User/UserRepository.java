@@ -2,16 +2,23 @@ package com.example.coffeebrewapp.Repository.RemoteDataSource.User;
 
 import android.app.Application;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.coffeebrewapp.Data.ProfileData.ProfileData;
 import com.example.coffeebrewapp.Data.User.UserLiveData;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,8 +28,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.List;
-
 public class UserRepository {
 
     private final UserLiveData currentUser; // The data we work with
@@ -31,6 +36,7 @@ public class UserRepository {
     private final Application app;
     private static UserRepository instance;
 
+    private DatabaseReference allUsersRef;
     private DatabaseReference databaseAllCoffee;
     private StorageReference storageReference;
     private ProfileData temp;
@@ -43,10 +49,13 @@ public class UserRepository {
 
 
     public void init() {
-        databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
+        databaseAllCoffee = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("CoffeeProducts");
+        allUsersRef = FirebaseDatabase.getInstance("https://coffeebrewapp-2da9e-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference("User_Images");
         liveProfilData  = new MutableLiveData<>();
         temp = new ProfileData();
+
+
     }
 
 
@@ -99,7 +108,7 @@ public class UserRepository {
 
     public MutableLiveData<ProfileData> getCurrentUserProfileData() throws NullPointerException {
 
-        databaseAllCoffee.child(getCurrentUser().getValue().getDisplayName()).addValueEventListener(new ValueEventListener() {
+        allUsersRef.child(getCurrentUser().getValue().getDisplayName()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -143,7 +152,6 @@ public class UserRepository {
 
     public void uploadProfileImage(Uri imageUri, String uriExtension) {
 
-        //Current username
         String username = getCurrentUser().getValue().getDisplayName();
 
         StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ":" + uriExtension);
@@ -154,13 +162,18 @@ public class UserRepository {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        databaseAllCoffee.child(username).child("username").setValue(getCurrentUser().getValue().getDisplayName());
-                        databaseAllCoffee.child(username).child("imageSource").setValue(uri.toString());
-
+                        allUsersRef.child(username).child("imageSource").setValue(uri.toString());
                     }
                 });
             }
         });
+
+    }
+
+    public void changeUsername(String newUsername) {
+
+        allUsersRef.child(getCurrentUser().getValue().getDisplayName()).child("username").setValue(newUsername);
+        databaseAllCoffee.child(getCurrentUser().getValue().getDisplayName()).child("username").setValue(newUsername);
 
     }
 
